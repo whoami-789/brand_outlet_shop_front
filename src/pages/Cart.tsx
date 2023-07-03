@@ -5,8 +5,8 @@ import {Button} from "@mui/material";
 export function Cart_page() {
     return (
         <>
-            <div className="bg-gray-300 max-w-full mr-2 overflow-hidden">
-                <div className="mt-2 max-w-full inline-block">
+            <div className="bg-gray-300 w-full mr-2 overflow-hidden">
+                <div className="mt-2 inline-block">
                     <Cart/>
                     <Cart/>
                     <Cart/>
