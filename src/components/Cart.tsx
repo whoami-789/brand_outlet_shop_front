@@ -5,7 +5,7 @@ import photo from "../images/1.jpg";
 export function Cart() {
     return (
         <>
-            <div className="ml-2">
+            <div>
                 <Box
                     sx={{
                         width: 350,
