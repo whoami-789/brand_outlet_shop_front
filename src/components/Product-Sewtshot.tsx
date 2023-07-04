@@ -48,7 +48,7 @@ export function ProductSwetshot() {
             <div className="ml-2">
                 <Box
                     sx={{
-                        width: 350,
+                        width: 340,
                         height: 300,
                         backgroundColor: '#ffff',
                         borderRadius: '7px',
