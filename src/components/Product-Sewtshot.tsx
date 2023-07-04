@@ -48,7 +48,7 @@ export function ProductSwetshot() {
             <div className="ml-2">
                 <Box
                     sx={{
-                        width: 330,
+                        width: 350,
                         height: 300,
                         backgroundColor: '#ffff',
                         borderRadius: '7px',
@@ -71,7 +71,7 @@ export function ProductSwetshot() {
                                                 overflow: 'hidden',
                                                 width: 200,
                                                 height: 200,
-                                                ml: 11,
+                                                ml: 8,
                                             }}
                                             src={step.imgPath}
                                             alt={step.label}
