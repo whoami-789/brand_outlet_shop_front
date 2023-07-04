@@ -48,7 +48,7 @@ export function ProductSwetshot() {
             <div className="ml-2">
                 <Box
                     sx={{
-                        width: 340,
+                        width: 345,
                         height: 300,
                         backgroundColor: '#ffff',
                         borderRadius: '7px',
@@ -86,11 +86,11 @@ export function ProductSwetshot() {
                         <p className="text-xs">Nike Dunk Low "Grey Frog"</p>
                         <p className="font-bold text-sm">22 000 ₽</p>
                     </div>
-                    <div className="ml-9 flex mx-8">
+                    <div className="ml-6 flex mx-8">
                         <FormControl
                             sx={{
                                 mt: 1,
-                                mr: 10,
+                                mr: 12,
                                 width: 140,
                                 height: 35,
                                 mb: -1,
