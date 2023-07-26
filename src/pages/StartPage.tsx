@@ -24,7 +24,7 @@ export function Start_Page() {
             <div className="bg-gray-300 w-full mr-2 overflow-hidden">
                 <div className="mt-2 inline-block w-fit">
                     <ImageList
-                        sx={{width: 390, height: 800}}
+                        sx={{width: 330, height: 800}}
                         variant="quilted"
                         cols={4}
                         rowHeight={121}
