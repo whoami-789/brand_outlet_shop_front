@@ -1,7 +1,6 @@
 import React from "react";
 import {ImageList, ImageListItem} from "@mui/material";
 import air_force from "../images/air_force.jpg";
-import blazer from "../images/blazer.jpg";
 import boost from "../images/boost_350.jpg";
 import dunk from "../images/dunk.jpg";
 import jordan1 from "../images/jordan1.jpg";
@@ -9,6 +8,7 @@ import jordan4 from "../images/jordan4.jpg";
 import nb from "../images/nb.jpg";
 import yezze700 from "../images/yezze700.jpg";
 import sweetshot from "../images/sweetshot.jpg";
+import {Navigate} from "react-router-dom";
 
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
@@ -46,7 +46,7 @@ export function Start_Page() {
                                     {...srcset(item.img, 121, item.rows, item.cols)}
                                     alt={item.title}
                                     loading="lazy"
-                                    onClick={() => window.open("https://ru.wikipedia.org/wiki/")}/>
+                                    onClick={() => {window.location.href = "/product";}}/>
                             </ImageListItem>
                         ))}
                     </ImageList>
