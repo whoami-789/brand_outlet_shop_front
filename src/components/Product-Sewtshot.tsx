@@ -29,6 +29,8 @@ const images = [
 
 export function ProductSwetshot() {
 
+
+
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -40,6 +42,10 @@ export function ProductSwetshot() {
 
     const handleChange = (event: SelectChangeEvent) => {
         setSize(event.target.value as string);
+
+    };
+
+    const textSwap = () => {
 
     };
 
@@ -150,6 +156,8 @@ export function ProductSwetshot() {
                                         background: "#767676",
                                     },
                                 }}
+                                key={1}
+                                onClick={textSwap}
                                 variant="contained">В корзину</Button>
                         </div>
                     </div>

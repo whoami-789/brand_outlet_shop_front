@@ -3,6 +3,12 @@ export interface IProduct {
     title: string
     price: number
     category: string
-    images: []
-    size: []
+    images: {
+        id: number
+        image: string
+    }[]
+    size: {
+        id: number
+        size_title: string
+    }[]
 }

@@ -7,6 +7,7 @@ export function Cart_page() {
         <>
             <div className="bg-gray-300 w-full mr-2 overflow-hidden">
                 <div className="mt-2 inline-block">
+
                     <Cart/>
                     <Cart/>
                     <Cart/>
