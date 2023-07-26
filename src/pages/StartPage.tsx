@@ -32,7 +32,7 @@ export function Start_Page() {
                     >
                         {itemData.map((item) => (
                             <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} sx={{m:1}}>
-                                <div>{item.title}</div>
+                                <div className="text-center font-bold text-sm">{item.title}</div>
                                 <img
                                     {...srcset(item.img, 121, item.rows, item.cols)}
                                     alt={item.title}
