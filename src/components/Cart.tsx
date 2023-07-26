@@ -3,6 +3,7 @@ import {Avatar, Box, Button} from "@mui/material";
 import photo from "../images/1.jpg";
 
 export function Cart() {
+
     return (
         <>
             <div>
@@ -18,13 +19,14 @@ export function Cart() {
                             variant="square"
                             src={photo}
                             sx={{
-                                width: 130,
-                                height: 70,
+                                width: 150,
+                                height: 90,
                                 ml: 3,
                             }}
                         />
                         <div className="ml-4 w-48">
                             <p className="text-sm w-48">Nike Dunk Low "Grey Frog"</p>
+                            <p className="font-bold text-sm w-40">Размер: </p>
                             <p className="font-bold text-sm w-40">22 000 ₽</p>
                             <Box
                                 sx={{

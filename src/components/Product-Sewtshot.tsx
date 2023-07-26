@@ -30,7 +30,6 @@ const images = [
 export function ProductSwetshot() {
 
 
-
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -90,76 +89,22 @@ export function ProductSwetshot() {
 
                     <div className="ml-4 mt-1.5">
                         <p className="text-xs">Nike Dunk Low "Grey Frog"</p>
+                        <p className="font-bold text-sm">Размеры: </p>
                         <p className="font-bold text-sm">22 000 ₽</p>
                     </div>
-                    <div className="ml-6 flex mx-8">
-                        <FormControl
+                    <div className="ml-24 mt-0 self-center">
+                        <Button
                             sx={{
-                                mt: 1,
-                                mr: 12,
-                                width: 140,
-                                height: 35,
-                                mb: -1,
-                                color: '#fff',
-                                borderRadius: 10,
+                                minWidth: 140,
+                                height: 30,
+                                backgroundColor: '#000000',
                                 '&:hover': {
-                                    color: '#fff',
-                                }
-                            }}
-                        >
-                            <InputLabel
-                                id="demo-select-small-label"
-                                sx={{
-                                    maxWidth: 140,
-                                    width: 140,
-                                    height: 35,
-                                    mt: -1.5,
-                                    color: '#fff',
-                                    '&:focus': {
-                                        color: '#ffff',
-                                    }
-                                }}>Размеры</InputLabel>
-                            <Select
-                                sx={[{
-                                    width: 140,
-                                    height: 30,
-                                    contrastText: '#fff',
-                                    backgroundColor: '#000000',
-                                    color: '#fff',
+                                    background: "#767676",
                                 },
-                                    {
-                                        '& > svg': {
-                                            color: '#fff',
-                                        },
-
-                                    }]}
-                                labelId="demo-select-small-label"
-                                id="demo-select-small"
-                                value={size}
-                                label="Age"
-                                onChange={handleChange}
-                            >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
-                        </FormControl>
-
-                        <div className="ml-1 mt-0 self-center w-full">
-                            <Button
-                                sx={{
-                                    mt: 1,
-                                    minWidth: 140,
-                                    height: 30,
-                                    backgroundColor: '#000000',
-                                    '&:hover': {
-                                        background: "#767676",
-                                    },
-                                }}
-                                key={1}
-                                onClick={textSwap}
-                                variant="contained">В корзину</Button>
-                        </div>
+                            }}
+                            key={1}
+                            onClick={textSwap}
+                            variant="contained">В корзину</Button>
                     </div>
                 </Box>
             </div>

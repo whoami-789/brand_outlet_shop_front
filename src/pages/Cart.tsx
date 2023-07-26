@@ -7,7 +7,6 @@ export function Cart_page() {
         <>
             <div className="bg-gray-300 w-full mr-2">
                 <div className="mt-2 inline-block w-fit">
-
                     <Cart/>
                     <Cart/>
                     <Cart/>

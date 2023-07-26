@@ -8,6 +8,8 @@ import jordan1 from "../images/jordan1.jpg";
 import jordan4 from "../images/jordan4.jpg";
 import nb from "../images/nb.jpg";
 import yezze700 from "../images/yezze700.jpg";
+import sweetshot from "../images/sweetshot.jpg";
+
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
     return {
@@ -18,8 +20,15 @@ function srcset(image: string, size: number, rows = 1, cols = 1) {
     };
 }
 
+
+
+
 export function Start_Page() {
-    return (
+        // const imageClick = () => {
+        //     return <Redirect/>
+        // }
+
+        return (
         <>
             <div className="bg-gray-300 w-full mr-2 overflow-hidden">
                 <div className="mt-2 inline-block w-fit">
@@ -37,7 +46,7 @@ export function Start_Page() {
                                     {...srcset(item.img, 121, item.rows, item.cols)}
                                     alt={item.title}
                                     loading="lazy"
-                                />
+                                    onClick={() => window.open("https://ru.wikipedia.org/wiki/")}/>
                             </ImageListItem>
                         ))}
                     </ImageList>
@@ -55,8 +64,8 @@ const itemData = [
         cols: 2,
     },
     {
-        img: blazer,
-        title: 'blazer',
+        img: sweetshot,
+        title: 'sweetshot',
         rows: 2,
         cols: 2,
     },

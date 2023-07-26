@@ -70,8 +70,8 @@ export function Products() {
                                             sx={{
                                                 display: 'block',
                                                 overflow: 'hidden',
-                                                width: 150,
-                                                height: 70,
+                                                width: 160,
+                                                height: 80,
                                                 ml: 2,
                                             }}
                                             src={step.imgPath}
@@ -84,60 +84,10 @@ export function Products() {
                     </div>
                     <div className="ml-4 mt-1.5">
                         <p className="text-xs">Nike Dunk Low "Grey Frog"</p>
+                        <p className="font-bold text-sm">Размер: </p>
                         <p className="font-bold text-sm">22 000 ₽</p>
                     </div>
                     <div className="ml-6">
-                        <FormControl
-                            sx={{
-                                mt: 1,
-                                ml: 0.5,
-                                width: 120,
-                                height: 35,
-                                mb: -1,
-                                color: '#fff',
-                                borderRadius: 10,
-                                '&:hover': {
-                                    color: '#fff',
-                                }
-                            }}
-                        >
-                            <InputLabel
-                                id="demo-select-small-label"
-                                sx={{
-                                    width: 120,
-                                    height: 35,
-                                    mt: -1.5,
-                                    color: '#fff',
-                                    '&:focus': {
-                                        color: '#ffff',
-                                    }
-                                }}>Размеры</InputLabel>
-                            <Select
-                                sx={[{
-                                    width: 120,
-                                    height: 30,
-                                    contrastText: '#fff',
-                                    backgroundColor: '#000000',
-                                    color: '#fff',
-                                },
-                                    {
-                                        '& > svg': {
-                                            color: '#fff',
-                                        },
-
-                                    }]}
-                                labelId="demo-select-small-label"
-                                id="demo-select-small"
-                                value={size}
-                                label="Age"
-                                onChange={handleChange}
-                            >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
-                        </FormControl>
-
                         <div className="ml-1 mt-0 self-center w-full">
                             <Button
                                 sx={{
