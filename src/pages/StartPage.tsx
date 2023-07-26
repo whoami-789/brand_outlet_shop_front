@@ -22,7 +22,7 @@ export function Start_Page() {
     return (
         <>
             <div className="bg-gray-300 w-full mr-2 overflow-hidden">
-                <div className="mt-2 inline-block">
+                <div className="mt-2 inline-block w-fit">
                     <ImageList
                         sx={{width: 450, height: 800}}
                         variant="quilted"
