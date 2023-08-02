@@ -1,6 +1,14 @@
 import React, {useCallback} from "react";
 import {Avatar, Box, Button} from "@mui/material";
 import photo from "../images/1.jpg";
+import 'overlayscrollbars/overlayscrollbars.css';
+import {
+    OverlayScrollbars,
+    ScrollbarsHidingPlugin,
+    SizeObserverPlugin,
+    ClickScrollPlugin
+} from 'overlayscrollbars';
+import {useMatch} from "react-router-dom";
 
 export function Cart() {
 
