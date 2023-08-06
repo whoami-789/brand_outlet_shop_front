@@ -24,7 +24,7 @@ export function Product_Unlimited_Page() {
                     />
                 </div>
                 <>
-                    <div className="flex  overflow-x-scroll whitespace-nowrap">
+                    <div className="flex overflow-x-scroll whitespace-nowrap">
                         <div className="rounded-full bg-white mb-2 w-fit h-1/6 ml-2">
                             <div className="text-center font-bold text-base mb-2">New Balance</div>
                         </div>
