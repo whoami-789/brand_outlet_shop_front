@@ -20,9 +20,6 @@ function srcset(image: string, size: number, rows = 1, cols = 1) {
     };
 }
 
-
-
-
 export function Start_Page() {
 
         return (
