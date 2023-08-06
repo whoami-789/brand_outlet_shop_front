@@ -58,7 +58,7 @@ export function Products_Unlimited({product}: ProductsProps) {
             <div className="ml-2">
                 <Box
                     sx={{
-                        width: 160,
+                        width: 170,
                         // height: 260,
                         backgroundColor: '#ffff',
                         borderRadius: '7px',
