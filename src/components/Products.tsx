@@ -98,6 +98,7 @@ export function Products() {
                                     '&:hover': {
                                         background: "#767676",
                                     },
+                                    zIndex: 1,
                                 }}
                                 variant="contained">В корзину</Button>
                         </div>

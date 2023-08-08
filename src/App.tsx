@@ -3,13 +3,9 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Products_page} from "./pages/Products";
 import {Cart_page} from "./pages/Cart";
 import {ProductsSwetshot_page} from "./pages/Product-Sewtshot";
-import {Start_Page} from "./pages/StartPage";
-import {useProducts} from "./hooks/products";
 import {Product_Unlimited_Page} from "./pages/Product_Unlimited_Page";
 
 function App() {
-    const {products, loading, error} = useProducts()
-
     // @ts-ignore
     const tg = window.Telegram.WebApp;
     return (

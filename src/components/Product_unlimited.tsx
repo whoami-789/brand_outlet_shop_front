@@ -79,8 +79,9 @@ export function Products_Unlimited({product}: ProductsProps) {
                                             sx={{
                                                 display: 'block',
                                                 overflow: 'hidden',
-                                                height: 140,
-                                                ml: 5,
+                                                maxWidth: '100%', // Максимальная ширина
+                                                maxHeight: '100%', // Максимальная высота
+                                                height: 140, // Желаемая высота
                                             }}
                                             src={step.imgPath}
                                             alt={step.label}
@@ -95,8 +96,8 @@ export function Products_Unlimited({product}: ProductsProps) {
                         <p className="font-bold text-sm">Размер: какой то</p>
                         <p className="font-bold text-sm">{product.price}</p>
                     </div>
-                    <div className="ml-6">
-                        <div className="ml-2 mt-0 self-center w-full">
+                    <div className="ml-4 z-1">
+                        <div className="ml-2 mt-0 self-center w-full relative z-10">
                             <Button
                                 sx={{
                                     mt: 1,
