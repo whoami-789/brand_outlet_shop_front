@@ -1,16 +1,21 @@
-import React, {useCallback} from "react";
+import React, {useState} from "react";
 import {Avatar, Box, Button} from "@mui/material";
 import photo from "../images/1.jpg";
 import 'overlayscrollbars/overlayscrollbars.css';
-import {
-    OverlayScrollbars,
-    ScrollbarsHidingPlugin,
-    SizeObserverPlugin,
-    ClickScrollPlugin
-} from 'overlayscrollbars';
-import {useMatch} from "react-router-dom";
 
 export function Cart() {
+
+    const [quantity, setQuantity] = useState(1);
+
+    const handleDecrease = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
+
+    const handleIncrease = () => {
+        setQuantity(quantity + 1);
+    };
 
     return (
         <>
@@ -43,19 +48,10 @@ export function Cart() {
                                     height: 30,
                                     backgroundColor: '#949494',
                                     display: 'flex',
-                                }}>
+                                }}
+                            >
                                 <Button
-                                    sx={{
-                                        color: '#ffff',
-                                        minWidth: 45,
-                                        height: 30,
-                                        '&:hover': {
-                                            background: "#767676",
-                                        },
-                                    }}
-                                    variant="text">-</Button>
-                                <p className="text-white pt-0.5" id="num">1</p>
-                                <Button
+                                    onClick={handleDecrease}
                                     sx={{
                                         color: '#ffff',
                                         minWidth: 45,
@@ -65,7 +61,26 @@ export function Cart() {
                                         },
                                     }}
                                     variant="text"
-                                    >+</Button>
+                                >
+                                    -
+                                </Button>
+                                <p className="text-white pt-0.5" id="num">
+                                    {quantity}
+                                </p>
+                                <Button
+                                    onClick={handleIncrease}
+                                    sx={{
+                                        color: '#ffff',
+                                        minWidth: 45,
+                                        height: 30,
+                                        '&:hover': {
+                                            background: "#767676",
+                                        },
+                                    }}
+                                    variant="text"
+                                >
+                                    +
+                                </Button>
                             </Box>
                         </div>
                     </div>
