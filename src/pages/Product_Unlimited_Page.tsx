@@ -61,7 +61,7 @@ export function Product_Unlimited_Page() {
     return (
         <div className="relative bg-gray-300 w-full h-full">
             <CartButton onClick={() => setCartVisible(!cartVisible)}/> {/* Добавьте кнопку корзины */}
-            <div className="mb-3 ml-20">
+            <div className="mb-3 ml-16">
                 <TextField
                     id="input-with-icon-textfield"
                     InputProps={{
