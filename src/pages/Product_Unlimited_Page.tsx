@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useProducts } from "../hooks/products";
-import { Products_Unlimited } from "../components/Product_unlimited";
-import { InputAdornment, TextField } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {useProducts} from "../hooks/products";
+import {Products_Unlimited} from "../components/Product_unlimited";
+import {InputAdornment, TextField} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import axios from "axios";
-import { IProduct } from "../models";
-import { CartButton } from "../components/CartButton"; // Импортируйте компонент кнопки корзины
+import {IProduct} from "../models";
+import {CartButton} from "../components/CartButton";
+import {Link} from "react-router-dom"; // Импортируйте компонент кнопки корзины
 
 interface ProductProps {
     product: IProduct;
@@ -20,12 +21,12 @@ function getUniqueCategories(products: IProduct[]) {
 }
 
 export function Product_Unlimited_Page() {
-    const { products } = useProducts();
+    const {products} = useProducts();
     const [categories, setCategories] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState<string>('');
-    const [cartVisible, setCartVisible] = useState(false); // Добавьте состояние для видимости корзины
+    const [cartVisible, setCartVisible] = useState(false); // Состояние для видимости корзины
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -59,7 +60,7 @@ export function Product_Unlimited_Page() {
 
     return (
         <div className="relative bg-gray-300 w-full h-full">
-            <CartButton onClick={() => setCartVisible(!cartVisible)} /> {/* Добавьте кнопку корзины */}
+            <CartButton onClick={() => setCartVisible(!cartVisible)}/> {/* Добавьте кнопку корзины */}
             <div className="mb-3 ml-20">
                 <TextField
                     id="input-with-icon-textfield"
@@ -87,7 +88,12 @@ export function Product_Unlimited_Page() {
             <div className="grid gap-2 grid-cols-2 grid-rows-2 w-fit mb-2 z-0">
                 {filteredProducts.map(product => <Products_Unlimited product={product} key={product.id}/>)}
             </div>
-            {cartVisible && <div className="absolute bottom-0 left-0 p-2 z-10" style={{ zIndex: 10, position: 'relative' }}><CartButton onClick={() => setCartVisible(false)} /></div>} {/* Добавьте кнопку корзины */}
+            {cartVisible &&
+                <div className="absolute bottom-0 left-0 p-2 z-10" style={{zIndex: 10, position: 'relative'}}>
+                    <Link to="/cart">
+                        <CartButton onClick={() => setCartVisible(!cartVisible)}/>
+                    </Link>
+                </div>} {/* Добавьте кнопку корзины */}
         </div>
     )
 }
