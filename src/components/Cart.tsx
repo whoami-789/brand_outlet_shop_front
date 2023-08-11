@@ -1,10 +1,17 @@
-import React, {useState} from "react";
-import {Avatar, Box, Button} from "@mui/material";
+import React, { useState } from "react";
+import { Avatar, Box, Button } from "@mui/material";
 import photo from "../images/1.jpg";
-import 'overlayscrollbars/overlayscrollbars.css';
 
-export function Cart() {
+interface CartProps {
+    product: {
+        id: number;
+        title: string;
+        price: number;
+        image: string;
+    };
+}
 
+export function Cart({ product }: CartProps) {
     const [quantity, setQuantity] = useState(1);
 
     const handleDecrease = () => {
@@ -30,7 +37,7 @@ export function Cart() {
                     <div className="flex">
                         <Avatar
                             variant="square"
-                            src={photo}
+                            src={product.image}
                             sx={{
                                 width: 150,
                                 height: 90,
@@ -38,9 +45,9 @@ export function Cart() {
                             }}
                         />
                         <div className="ml-4 w-48">
-                            <p className="text-sm w-48">Nike Dunk Low "Grey Frog"</p>
+                            <p className="text-sm w-48">{product.title}</p>
                             <p className="font-bold text-sm w-40">Размер: </p>
-                            <p className="font-bold text-sm w-40">22 000 ₽</p>
+                            <p className="font-bold text-sm w-40">{product.price} ₽</p>
                             <Box
                                 sx={{
                                     borderRadius: 1.5,

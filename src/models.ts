@@ -13,6 +13,21 @@ export interface Product {
     }[]
 }
 
+export interface Product {
+    id: number
+    title: string
+    price: number
+    category: string
+    images: {
+        id: number
+        image: string
+    }[]
+    size: {
+        id: number
+        size_title: string
+    }[]
+}
+
 export interface IProduct {
     id: number
     title: string
