@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { Cart } from "../components/Cart";
-import { Button } from "@mui/material";
+import {Cart} from "../components/Cart";
+import {Button} from "@mui/material";
+import {Link} from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 interface Product {
     id: number;
@@ -33,11 +35,19 @@ export function Cart_page() {
 
     return (
         <div className="bg-gray-300 w-full mr-2">
+
+            {/* Кнопка возврата на предыдущую страницу */}
+            <Link to="/" className="mb-3 mt-3 ml-5 flex items-center text-gray-700 hover:underline">
+                <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center mr-2">
+                    <ArrowBackIcon />
+                </div>
+            </Link>
+
             <div
                 className="mt-2 inline-block w-full max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide overflow-hidden"
             >
                 {products.map((product) => (
-                    <Cart key={product.id} product={product} />
+                    <Cart key={product.id} product={product}/>
                 ))}
             </div>
             <div className="flex ml-16">

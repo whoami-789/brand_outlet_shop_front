@@ -60,7 +60,6 @@ export function Product_Unlimited_Page() {
 
     return (
         <div className="relative bg-gray-300 w-full h-full">
-            <CartButton onClick={() => setCartVisible(!cartVisible)}/> {/* Добавьте кнопку корзины */}
             <div className="mb-3 ml-16">
                 <TextField
                     id="input-with-icon-textfield"
@@ -88,12 +87,11 @@ export function Product_Unlimited_Page() {
             <div className="grid gap-2 grid-cols-2 grid-rows-2 w-fit mb-2 z-0">
                 {filteredProducts.map(product => <Products_Unlimited product={product} key={product.id}/>)}
             </div>
-            {cartVisible &&
                 <div className="absolute bottom-0 left-0 p-2 z-10" style={{zIndex: 10, position: 'relative'}}>
                     <Link to="/cart">
                         <CartButton onClick={() => setCartVisible(!cartVisible)}/>
                     </Link>
-                </div>} {/* Добавьте кнопку корзины */}
+                </div>
         </div>
     )
 }
