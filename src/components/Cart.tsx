@@ -45,7 +45,7 @@ export function Cart({ product }: CartProps) {
                             }}
                         />
                         <div className="ml-4 w-48">
-                            <p className="text-sm w-48">{product.title}</p>
+                            <p className="text-sm w-48 truncate">{product.title}</p>
                             <p className="font-bold text-sm w-40">Размер: </p>
                             <p className="font-bold text-sm w-40">{product.price} ₽</p>
                             <Box

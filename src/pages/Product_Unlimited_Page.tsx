@@ -77,11 +77,11 @@ export function Product_Unlimited_Page() {
             <div className="flex overflow-x-scroll whitespace-nowrap">
                 {categories.map((category, index) => (
                     <div
-                        className="rounded-full bg-white mb-2 w-fit h-1/6 ml-2"
+                        className="rounded bg-white m-2 w-fit h-1/6 ml-2"
                         key={index}
                         onClick={() => handleCategoryClick(category)}
                     >
-                        <div className="text-center font-bold text-base mb-2">{category}</div>
+                        <div className="text-center font-bold text-base m-1">{category}</div>
                     </div>
                 ))}
             </div>
