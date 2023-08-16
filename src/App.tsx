@@ -1,9 +1,8 @@
 import React from 'react';
-import {BrowserRouter, Link, Route, Router, Routes} from "react-router-dom";
-import {Products_page} from "./pages/Products";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Cart_page} from "./pages/Cart";
-import {ProductsSwetshot_page} from "./pages/Product-Sewtshot";
 import {Product_Unlimited_Page} from "./pages/Product_Unlimited_Page";
+import AdminPanel from "./admin/AdminPanel";
 
 function App() {
     // @ts-ignore
@@ -11,8 +10,9 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Product_Unlimited_Page />} />
-                <Route path="/cart" element={<Cart_page />} />
+                <Route path="/" element={<Product_Unlimited_Page/>}/>
+                <Route path="/cart" element={<Cart_page/>}/>
+                <Route path="/admin" element={<AdminPanel />} />
             </Routes>
         </BrowserRouter>
     );

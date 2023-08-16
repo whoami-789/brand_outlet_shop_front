@@ -1,17 +1,12 @@
 
 export interface Product {
-    id: number
-    title: string
-    price: number
-    category: string
-    images: {
-        id: number
-        image: string
-    }[]
-    size: {
-        id: number
-        size_title: string
-    }[]
+    id: number;
+    title: string;
+    price: number;
+    size: string;
+    img1: string;
+    img2: string;
+    category: string;
 }
 
 export interface IProduct {
@@ -25,4 +20,9 @@ export interface IProduct {
         rate: number
         count: number
     }
+}
+
+export interface Category {
+    id: number;
+    title: string;
 }
