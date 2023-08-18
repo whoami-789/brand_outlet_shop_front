@@ -2,11 +2,11 @@
 export interface Product {
     id: number;
     title: string;
-    price: number;
     size: string;
-    img1: string;
-    img2: string;
-    category: string;
+    img1: string; // Используйте image1Path
+    img2: string; // Используйте image2Path
+    price: number;
+    categoryName: string;
 }
 
 export interface IProduct {

@@ -9,11 +9,11 @@ function AdminPanel() {
     const initialProduct: Product = {
         id: 0,
         title: "",
-        price: 0,
-        category: "",
-        img1: "",
-        img2: "",
         size: "",
+        img1: "", // Используйте image1Path
+        img2: "", // Используйте image2Path
+        price: 0,
+        categoryName: "",
     };
 
     const initialCategory: Category = {
@@ -27,7 +27,7 @@ function AdminPanel() {
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
     useEffect(() => {
-        axios.get<Product[]>("http://localhost:8080/api/products/all")
+        axios.get<Product[]>("http://localhost:8080/api/products/")
             .then(response => {
                 setProducts(response.data);
             })
@@ -126,11 +126,12 @@ function AdminPanel() {
                     {products.map((product) => (
                         <tr key={product.id} className="bg-white">
                             <td className="border border-gray-400 px-4 py-2">
-                                <img src={URL.createObjectURL(new Blob([product.img1]))} alt="Image 1" />
+                                <img src={`${product.img1}`} alt="Image 1" className="w-44"/>
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                                <img src={URL.createObjectURL(new Blob([product.img2]))} alt="Image 2" />
+                                <img src={`${product.img2}`} alt="Image 2" className="w-44"/>
                             </td>
+
                             <td className="border border-gray-400 px-4 py-2">{product.title}</td>
                             <td className="border border-gray-400 px-4 py-2">{product.price} ₽</td>
                             <td className="border border-gray-400 px-4 py-2">{product.size}</td>

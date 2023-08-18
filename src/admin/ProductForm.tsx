@@ -20,7 +20,7 @@ function ProductForm({ initialProduct, onSave, categories, onCancel }: ProductFo
             const formData = new FormData();
             formData.append("title", product.title);
             formData.append("price", product.price.toString());
-            formData.append("category", product.category);
+            formData.append("category", product.categoryName);
 
             if (selectedImage1) {
                 formData.append("image1", selectedImage1);
@@ -78,8 +78,8 @@ function ProductForm({ initialProduct, onSave, categories, onCancel }: ProductFo
                     <label className="block text-sm font-medium text-gray-700">Категория:</label>
                     <select
                         className="mt-1 block w-full border rounded px-3 py-2"
-                        value={product.category}
-                        onChange={(e) => setProduct({ ...product, category: e.target.value })}
+                        value={product.categoryName}
+                        onChange={(e) => setProduct({ ...product, categoryName: e.target.value })}
                     >
                         <option value="">Выберите категорию</option>
                         {categories.map((category) => (
