@@ -125,11 +125,11 @@ function AdminPanel() {
                     <tbody>
                     {products.map((product) => (
                         <tr key={product.id} className="bg-white">
-                            <td className="border border-gray-400 px-4 py-2">
-                                <img src={`${product.img1}`} alt="Image 1" className="w-44"/>
+                            <td className="border border-gray-400 px-4 py-2 w-48">
+                                <img src={`${product.img1}`} alt="Image 1" />
                             </td>
-                            <td className="border border-gray-400 px-4 py-2">
-                                <img src={`${product.img2}`} alt="Image 2" className="w-44"/>
+                            <td className="border border-gray-400 px-4 py-2 w-48">
+                                <img src={`${product.img2}`} alt="Image 2" />
                             </td>
 
                             <td className="border border-gray-400 px-4 py-2">{product.title}</td>
