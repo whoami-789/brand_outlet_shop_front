@@ -44,23 +44,47 @@ function AdminPanel() {
             });
     }, []);
 
-    const handleSaveProduct = async (product: Product) => {
+    const handleSaveProduct = async (product: Product, image1: File, image2: File) => {
         try {
-            if (editingProduct) {
-                await axios.put(`ССЫЛКА_ДЛЯ_ИЗМЕНЕНИЯ_ТОВАРА/${product.id}`, product);
-                const updatedProducts = products.map((p) =>
-                    p.id === product.id ? product : p
-                );
-                setProducts(updatedProducts);
-            } else {
-                const response = await axios.post("ССЫЛКА_ДЛЯ_ДОБАВЛЕНИЯ_ТОВАРА", product);
-                setProducts([...products, response.data]);
-            }
+            const formData = new FormData();
+            formData.append("title", product.title);
+            formData.append("size", product.size);
+            formData.append("price", product.price.toString());
+            formData.append("categoryName", product.categoryName);
+            formData.append("image1", image1);
+            formData.append("image2", image2);
+
+            const config = {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            };
+
+            const response = await axios.post<Product>(
+                "http://localhost:8080/api/products/create",
+                formData,
+                config
+            );
+
+            setProducts([...products, response.data]);
             setEditingProduct(null);
         } catch (error) {
             console.error("Ошибка при сохранении товара:", error);
         }
     };
+
+    const handleUpdateProduct = async (product: Product) => {
+        try {
+            await axios.put(`http://localhost:8080/api/products/${product.id}`, product);
+            const updatedProducts = products.map((p) =>
+                p.id === product.id ? product : p
+            );
+            setProducts(updatedProducts);
+        } catch (error) {
+            console.error("Ошибка при обновлении товара:", error);
+        }
+    };
+
 
     const handleSaveCategory = async (category: Category) => {
         try {
@@ -92,20 +116,31 @@ function AdminPanel() {
         setEditingCategory(null);
     };
 
-    const handleDeleteProduct = (productId: number) => {
-        const updatedProducts = products.filter((product) => product.id !== productId);
-        setProducts(updatedProducts);
+    const handleDeleteProduct = async (productId: number) => {
+        try {
+            await axios.delete(`http://localhost:8080/api/products/${productId}`);
+            const updatedProducts = products.filter((product) => product.id !== productId);
+            setProducts(updatedProducts);
+        } catch (error) {
+            console.error("Ошибка при удалении товара:", error);
+        }
     };
 
-    const handleDeleteCategory = (categoryId: number) => {
-        const updatedCategories = categories.filter(
-            (category) => category.id !== categoryId
-        );
-        setCategories(updatedCategories);
+    const handleDeleteCategory = async (categoryId: number) => {
+        try {
+            await axios.delete(`http://localhost:8080/api/products/${categoryId}`);
+            const updatedCategories = categories.filter(
+                (category) => category.id !== categoryId
+            );
+            setCategories(updatedCategories);
+        } catch (error) {
+            console.error("Ошибка при удалении категории:", error);
+        }
     };
     const handleImageLoad = (url: string) => {
         URL.revokeObjectURL(url);
     };
+
     return (
         <div className="p-4">
             <h1 className="text-2xl text-center mb-4">Админка</h1>
@@ -126,10 +161,10 @@ function AdminPanel() {
                     {products.map((product) => (
                         <tr key={product.id} className="bg-white">
                             <td className="border border-gray-400 px-4 py-2 w-48">
-                                <img src={`${product.img1}`} alt="Image 1" />
+                                <img src={`${product.img1}`} alt="Image 1"/>
                             </td>
                             <td className="border border-gray-400 px-4 py-2 w-48">
-                                <img src={`${product.img2}`} alt="Image 2" />
+                                <img src={`${product.img2}`} alt="Image 2"/>
                             </td>
 
                             <td className="border border-gray-400 px-4 py-2">{product.title}</td>
@@ -159,10 +194,10 @@ function AdminPanel() {
                 >
                     Добавить товар
                 </button>
-                {editingProduct && (
+                {editingProduct !== null && (
                     <ProductForm
                         initialProduct={editingProduct}
-                        onSave={handleSaveProduct}
+                        onSave={(product, image1, image2) => handleSaveProduct(product, image1, image2)}
                         onCancel={handleCancelEdit}
                         categories={categories}
                     />

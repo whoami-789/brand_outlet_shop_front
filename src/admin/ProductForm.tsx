@@ -1,42 +1,34 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {Category, Product} from "../models";
-import axios from "axios";
 
 interface ProductFormProps {
     initialProduct: Product;
-    categories: Category[]; // Добавьте это
-    onSave: (product: Product) => void;
+    categories: Category[];
+    onSave: (product: Product, image1: File, image2: File) => void;
     onCancel: () => void;
 }
 
-function ProductForm({ initialProduct, onSave, categories, onCancel }: ProductFormProps) {
+function ProductForm({
+                         initialProduct,
+                         categories,
+                         onSave,
+                         onCancel,
+                     }: ProductFormProps) {
     const [product, setProduct] = useState<Product>(initialProduct);
     const [selectedImage1, setSelectedImage1] = useState<File | null>(null);
     const [selectedImage2, setSelectedImage2] = useState<File | null>(null);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        if (!selectedImage1 || !selectedImage2) {
+            console.error("Выберите оба изображения");
+            return;
+        }
+
         try {
-            const formData = new FormData();
-            formData.append("title", product.title);
-            formData.append("price", product.price.toString());
-            formData.append("category", product.categoryName);
-
-            if (selectedImage1) {
-                formData.append("image1", selectedImage1);
-            }
-
-            if (selectedImage2) {
-                formData.append("image2", selectedImage2);
-            }
-
-            const response = await axios.post<Product>("URL_ДЛЯ_ЗАПРОСА_ТОВАРОВ", formData);
-            onSave(response.data);
-            setProduct(initialProduct);
-            setSelectedImage1(null);
-            setSelectedImage2(null);
+            onSave(product, selectedImage1, selectedImage2);
         } catch (error) {
-            console.error("Ошибка при добавлении товара:", error);
+            console.error("Ошибка при сохранении товара:", error);
         }
     };
 
@@ -52,17 +44,27 @@ function ProductForm({ initialProduct, onSave, categories, onCancel }: ProductFo
         }
     };
 
+
     return (
         <div className="p-4 border rounded shadow">
             <h2 className="text-lg font-semibold mb-2">Форма товара</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700">Название:</label>
                     <input
                         type="text"
                         className="mt-1 block w-full border rounded px-3 py-2"
                         value={product.title}
-                        onChange={(e) => setProduct({ ...product, title: e.target.value })}
+                        onChange={(e) => setProduct({...product, title: e.target.value})}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Размер:</label>
+                    <input
+                        type="text"
+                        className="mt-1 block w-full border rounded px-3 py-2"
+                        value={product.size}
+                        onChange={(e) => setProduct({...product, size: e.target.value})}
                     />
                 </div>
                 <div className="mb-4">
@@ -71,7 +73,7 @@ function ProductForm({ initialProduct, onSave, categories, onCancel }: ProductFo
                         type="number"
                         className="mt-1 block w-full border rounded px-3 py-2"
                         value={product.price}
-                        onChange={(e) => setProduct({ ...product, price: parseFloat(e.target.value) })}
+                        onChange={(e) => setProduct({...product, price: parseFloat(e.target.value)})}
                     />
                 </div>
                 <div className="mb-4">
@@ -79,7 +81,7 @@ function ProductForm({ initialProduct, onSave, categories, onCancel }: ProductFo
                     <select
                         className="mt-1 block w-full border rounded px-3 py-2"
                         value={product.categoryName}
-                        onChange={(e) => setProduct({ ...product, categoryName: e.target.value })}
+                        onChange={(e) => setProduct({...product, categoryName: e.target.value})}
                     >
                         <option value="">Выберите категорию</option>
                         {categories.map((category) => (

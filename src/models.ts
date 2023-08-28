@@ -14,8 +14,6 @@ export interface ProductCreate {
     title: string;
     size: string;
     price: number;
-    img1File: File | null; // Загрузка файла 1
-    img2File: File | null; // Загрузка файла 2
     categoryName: string;
 }
 
