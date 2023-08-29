@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Avatar, Box, Button } from "@mui/material";
+import React, {useState} from "react";
+import {Avatar, Box, Button} from "@mui/material";
 import photo from "../images/1.jpg";
 
 interface CartProps {
@@ -11,7 +11,7 @@ interface CartProps {
     };
 }
 
-export function Cart({ product }: CartProps) {
+export function Cart({product}: CartProps) {
     const [quantity, setQuantity] = useState(1);
 
     const handleDecrease = () => {
@@ -35,15 +35,24 @@ export function Cart({ product }: CartProps) {
                     }}
                 >
                     <div className="flex">
-                        <Avatar
-                            variant="square"
-                            src={product.image}
-                            sx={{
+                        <div
+                            style={{
                                 width: 150,
                                 height: 90,
-                                ml: 3,
+                                marginLeft: 3,
+                                position: 'relative', // Добавлено для позиционирования
                             }}
-                        />
+                        >
+                            <img
+                                src={product.image}
+                                alt={product.title}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                }}
+                            />
+                        </div>
                         <div className="ml-4 w-48">
                             <p className="text-sm w-48 truncate">{product.title}</p>
                             <p className="font-bold text-sm w-40">Размер: </p>

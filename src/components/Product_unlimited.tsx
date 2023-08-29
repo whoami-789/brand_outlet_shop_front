@@ -70,18 +70,21 @@ export function Products_Unlimited({product}: ProductsProps) {
                             index={activeStep}
                             onChangeIndex={handleStepChange}
                             enableMouseEvents
+                            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         >
                             {images.map((step, index) => (
-                                <div className="mt-1">
+                                <div className="mt-1" key={index} style={{ height: 140 }}>
                                     {Math.abs(activeStep - index) <= 2 ? (
                                         <Box
                                             component="img"
                                             sx={{
                                                 display: 'block',
                                                 overflow: 'hidden',
-                                                maxWidth: '100%', // Максимальная ширина
-                                                maxHeight: '100%', // Максимальная высота
-                                                height: 140, // Желаемая высота
+                                                maxWidth: '100%',
+                                                maxHeight: '100%',
+                                                width: 'auto',
+                                                height: '100%',
+                                                margin: '0 auto', // Центрирование изображения по горизонтали
                                             }}
                                             src={step.imgPath}
                                             alt={step.label}
@@ -91,6 +94,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                             ))}
                         </AutoPlaySwipeableViews>
                     </div>
+
                     <div className="ml-4 mt-1.5">
                         <p className="text-xs">{product.title}</p>
                         <p className="font-bold text-sm">Размер: какой то</p>
