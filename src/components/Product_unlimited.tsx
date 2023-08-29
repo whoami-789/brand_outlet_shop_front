@@ -2,23 +2,19 @@ import React from "react";
 import {
     Box,
     Button,
-    FormControl,
-    InputLabel,
-    MenuItem, Select,
     SelectChangeEvent,
     useTheme
 } from "@mui/material";
-import photo from '../images/1.jpg'
 import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
-import {IProduct} from "../models";
+import {Product} from "../models";
 import {useProducts} from "../hooks/products";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 interface ProductsProps {
-    product: IProduct
+    product: Product
 }
 
 
@@ -28,11 +24,11 @@ export function Products_Unlimited({product}: ProductsProps) {
     const images = [
         {
             label: product.title,
-            imgPath: product.image,
+            imgPath: product.img1,
         },
         {
             label: product.title,
-            imgPath: product.image,
+            imgPath: product.img2,
         },
     ]
 

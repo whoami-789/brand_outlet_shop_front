@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import {IProduct} from "../models";
+import {Product} from "../models";
 import axios, {AxiosError} from "axios";
 
 export function useProducts() {
-    const [products, setProducts] = useState<IProduct[]>([])
+    const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
 
@@ -11,7 +11,7 @@ export function useProducts() {
         try {
             setError('')
             setLoading(true)
-            const response = await axios.get<IProduct[]>('https://fakestoreapi.com/products')
+            const response = await axios.get<Product[]>('http://localhost:8080/api/products/')
             setProducts(response.data)
             setLoading(false)
         } catch (e: unknown) {
