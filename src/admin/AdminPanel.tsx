@@ -1,9 +1,9 @@
-// AdminPanel.tsx
 import React, {useEffect, useState} from "react";
 import {Product, Category} from "../models";
 import ProductForm from "./ProductForm";
 import CategoryForm from "./CategoryForm";
 import axios from "axios";
+import ProductEditForm from "./ProductEditForm";
 
 function AdminPanel() {
     const initialProduct: Product = {
@@ -24,6 +24,7 @@ function AdminPanel() {
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+    const [addProduct, setaddProduct] = useState<Product | null>(null);
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
     useEffect(() => {
@@ -67,7 +68,7 @@ function AdminPanel() {
             );
 
             setProducts([...products, response.data]);
-            setEditingProduct(null);
+            setaddProduct(null);
         } catch (error) {
             console.error("Ошибка при сохранении товара:", error);
         }
@@ -75,16 +76,38 @@ function AdminPanel() {
 
     const handleUpdateProduct = async (product: Product) => {
         try {
-            await axios.put(`http://localhost:8080/api/products/${product.id}`, product);
+            if (!editingProduct) {
+                console.log("Нет данных для редактирования.");
+                return;
+            }
+
+            // Проверяем, были ли изменения в полях
+            const isUpdated =
+                product.title !== editingProduct.title ||
+                product.size !== editingProduct.size ||
+                product.price !== editingProduct.price;
+
+            if (!isUpdated) {
+                console.log("Нет изменений, не отправляем запрос на сервер.");
+                return;
+            }
+
+            const updatedProduct = {
+                ...product,
+                // Добавляем другие поля продукта
+            };
+
+            await axios.put(`http://localhost:8080/api/products/${product.id}`, updatedProduct);
+
             const updatedProducts = products.map((p) =>
-                p.id === product.id ? product : p
+                p.id === product.id ? updatedProduct : p
             );
+
             setProducts(updatedProducts);
         } catch (error) {
             console.error("Ошибка при обновлении товара:", error);
         }
     };
-
 
     const handleSaveCategory = async (category: Category) => {
         try {
@@ -113,6 +136,7 @@ function AdminPanel() {
 
     const handleCancelEdit = () => {
         setEditingProduct(null);
+        setaddProduct(null);
         setEditingCategory(null);
     };
 
@@ -152,6 +176,7 @@ function AdminPanel() {
                         <th className="border border-gray-400 px-4 py-2">Фото1</th>
                         <th className="border border-gray-400 px-4 py-2">Фото2</th>
                         <th className="border border-gray-400 px-4 py-2">Название</th>
+                        <th className="border border-gray-400 px-4 py-2">Категория</th>
                         <th className="border border-gray-400 px-4 py-2">Цена</th>
                         <th className="border border-gray-400 px-4 py-2">Размер</th>
                         <th className="border border-gray-400 px-4 py-2">Действия</th>
@@ -168,15 +193,24 @@ function AdminPanel() {
                             </td>
 
                             <td className="border border-gray-400 px-4 py-2">{product.title}</td>
+                            <td className="border border-gray-400 px-4 py-2">{product.categoryName}</td>
                             <td className="border border-gray-400 px-4 py-2">{product.price} ₽</td>
                             <td className="border border-gray-400 px-4 py-2">{product.size}</td>
                             <td className="border border-gray-400 px-4 py-2">
-                                <button
-                                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-2 rounded mr-2"
-                                    onClick={() => handleEditProduct(product)}
-                                >
-                                    Редактировать
-                                </button>
+                                {editingProduct !== null && editingProduct.id === product.id ? (
+                                    <ProductEditForm
+                                        initialProduct={editingProduct}
+                                        onUpdate={handleUpdateProduct}
+                                        onCancel={handleCancelEdit}
+                                    />
+                                ) : (
+                                    <button
+                                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-2 rounded mr-2"
+                                        onClick={() => handleEditProduct(product)}
+                                    >
+                                        Редактировать
+                                    </button>
+                                )}
                                 <button
                                     className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded"
                                     onClick={() => handleDeleteProduct(product.id)}
@@ -190,13 +224,13 @@ function AdminPanel() {
                 </table>
                 <button
                     className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-                    onClick={() => setEditingProduct(initialProduct)}
+                    onClick={() => setaddProduct(initialProduct)}
                 >
                     Добавить товар
                 </button>
-                {editingProduct !== null && (
+                {addProduct !== null && (
                     <ProductForm
-                        initialProduct={editingProduct}
+                        initialProduct={addProduct}
                         onSave={(product, image1, image2) => handleSaveProduct(product, image1, image2)}
                         onCancel={handleCancelEdit}
                         categories={categories}
