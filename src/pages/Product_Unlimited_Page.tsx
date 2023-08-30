@@ -4,13 +4,9 @@ import {Products_Unlimited} from "../components/Product_unlimited";
 import {InputAdornment, TextField} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import axios from "axios";
-import {IProduct, Product} from "../models";
+import {Product} from "../models";
 import {CartButton} from "../components/CartButton";
 import {Link} from "react-router-dom"; // Импортируйте компонент кнопки корзины
-
-interface ProductProps {
-    product: IProduct;
-}
 
 function getUniqueCategories(products: Product[]) {
     const uniqueCategories = new Set<string>();
@@ -33,7 +29,7 @@ export function Product_Unlimited_Page() {
             if (!hasMore || loading) return;
             setLoading(true);
             try {
-                const response = await axios.get<Product[]>(`http://localhost:8080/api/products/`);
+                const response = await axios.get<Product[]>(`http://brand-outlet.shop/api/products/`);
                 if (response.data.length === 0) {
                     setHasMore(false);
                 } else {

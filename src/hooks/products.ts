@@ -11,7 +11,7 @@ export function useProducts() {
         try {
             setError('')
             setLoading(true)
-            const response = await axios.get<Product[]>('http://localhost:8080/api/products/')
+            const response = await axios.get<Product[]>('http://brand-outlet.shop/api/products/')
             setProducts(response.data)
             setLoading(false)
         } catch (e: unknown) {

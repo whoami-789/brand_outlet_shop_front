@@ -28,7 +28,7 @@ function AdminPanel() {
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
 
     useEffect(() => {
-        axios.get<Product[]>("http://localhost:8080/api/products/")
+        axios.get<Product[]>("http://brand-outlet.shop/api/products/")
             .then(response => {
                 setProducts(response.data);
             })
@@ -36,7 +36,7 @@ function AdminPanel() {
                 console.error("Ошибка при получении данных о товарах:", error);
             });
 
-        axios.get<Category[]>("http://localhost:8080/api/category/all")
+        axios.get<Category[]>("http://brand-outlet.shop/api/category/all")
             .then(response => {
                 setCategories(response.data);
             })
@@ -62,7 +62,7 @@ function AdminPanel() {
             };
 
             const response = await axios.post<Product>(
-                "http://localhost:8080/api/products/create",
+                "http://brand-outlet.shop/api/products/create",
                 formData,
                 config
             );
@@ -97,7 +97,7 @@ function AdminPanel() {
                 // Добавляем другие поля продукта
             };
 
-            await axios.put(`http://localhost:8080/api/products/${product.id}`, updatedProduct);
+            await axios.put(`http://brand-outlet.shop/api/products/${product.id}`, updatedProduct);
 
             const updatedProducts = products.map((p) =>
                 p.id === product.id ? updatedProduct : p
@@ -118,7 +118,7 @@ function AdminPanel() {
                 );
                 setCategories(updatedCategories);
             } else {
-                const response = await axios.post("http://localhost:8080/api/category/create", category);
+                const response = await axios.post("http://brand-outlet.shop/api/category/create", category);
                 setCategories([...categories, response.data]);
             }
             setEditingCategory(null);
@@ -142,7 +142,7 @@ function AdminPanel() {
 
     const handleDeleteProduct = async (productId: number) => {
         try {
-            await axios.delete(`http://localhost:8080/api/products/${productId}`);
+            await axios.delete(`http://brand-outlet.shop/api/products/${productId}`);
             const updatedProducts = products.filter((product) => product.id !== productId);
             setProducts(updatedProducts);
         } catch (error) {
@@ -152,7 +152,7 @@ function AdminPanel() {
 
     const handleDeleteCategory = async (categoryId: number) => {
         try {
-            await axios.delete(`http://localhost:8080/api/products/${categoryId}`);
+            await axios.delete(`http://brand-outlet.shop/api/products/${categoryId}`);
             const updatedCategories = categories.filter(
                 (category) => category.id !== categoryId
             );

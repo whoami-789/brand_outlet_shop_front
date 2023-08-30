@@ -17,9 +17,6 @@ interface ProductsProps {
     product: Product
 }
 
-
-
-
 export function Products_Unlimited({product}: ProductsProps) {
     const images = [
         {
@@ -94,7 +91,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                     <div className="ml-4 mt-1.5">
                         <p className="text-xs">{product.title}</p>
                         <p className="font-bold text-sm">Размер: какой то</p>
-                        <p className="font-bold text-sm">{product.price}</p>
+                        <p className="font-bold text-sm">{product.price} ₽</p>
                     </div>
                     <div className="ml-4 z-1">
                         <div className="ml-2 mt-0 self-center w-full relative z-10">
