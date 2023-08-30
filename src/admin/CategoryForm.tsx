@@ -14,7 +14,7 @@ function CategoryForm({ initialCategory, onSave, onCancel }: CategoryFormProps) 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            const response = await axios.post<Category>("http://brand-outlet.shop/api/category/all", category);
+            const response = await axios.post<Category>("https://brand-outlet.shop/api/category/all", category);
             onSave(response.data);
             setCategory(initialCategory);
         } catch (error) {
