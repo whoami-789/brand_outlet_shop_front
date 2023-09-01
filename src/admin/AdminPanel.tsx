@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Product, Category} from "../models";
+import {Product, Category, ProductSize} from "../models";
 import ProductForm from "./ProductForm";
 import CategoryForm from "./CategoryForm";
 import axios from "axios";
@@ -9,10 +9,9 @@ function AdminPanel() {
     const initialProduct: Product = {
         id: 0,
         title: "",
-        size: "",
+        sizes: [], // Массив размеров пустой, так как вы начинаете с пустого списка размеров
         img1: "", // Используйте image1Path
         img2: "", // Используйте image2Path
-        price: 0,
         categoryName: "",
     };
 
@@ -26,6 +25,9 @@ function AdminPanel() {
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [addProduct, setaddProduct] = useState<Product | null>(null);
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+    const [sizes, setSizes] = useState<ProductSize[]>([]);
+
+
 
     useEffect(() => {
         axios.get<Product[]>("https://brand-outlet.shop/api/products/")
@@ -45,13 +47,20 @@ function AdminPanel() {
             });
     }, []);
 
-    const handleSaveProduct = async (product: Product, image1: File, image2: File) => {
+    const handleSaveProduct = async (product: Product, image1: File, image2: File, sizes: ProductSize[] = []) => {
+
         try {
             const formData = new FormData();
-            formData.append("title", product.title);
-            formData.append("size", product.size);
-            formData.append("price", product.price.toString());
-            formData.append("categoryName", product.categoryName);
+            // Объединяем все данные в один объект
+            const requestData = {
+                id: product.id,
+                title: product.title,
+                categoryName: product.categoryName,
+                sizes: sizes, // Используйте актуальное состояние размеров (sizes) из вашего компонента
+            };
+
+            // Преобразуем requestData в JSON и добавляем его в formData
+            formData.append("productDTO", JSON.stringify(requestData));
             formData.append("image1", image1);
             formData.append("image2", image2);
 
@@ -74,6 +83,7 @@ function AdminPanel() {
         }
     };
 
+
     const handleUpdateProduct = async (product: Product) => {
         try {
             if (!editingProduct) {
@@ -81,33 +91,56 @@ function AdminPanel() {
                 return;
             }
 
+            // Создаем объект, который содержит только измененные данные, включая размеры и цены
+            const updatedData = {
+                title: product.title,
+                sizes: product.sizes,
+            };
+
             // Проверяем, были ли изменения в полях
             const isUpdated =
                 product.title !== editingProduct.title ||
-                product.size !== editingProduct.size ||
-                product.price !== editingProduct.price;
+                !arraysAreEqual(product.sizes, editingProduct.sizes); // Проверка изменений в размерах и ценах
 
             if (!isUpdated) {
                 console.log("Нет изменений, не отправляем запрос на сервер.");
                 return;
             }
 
-            const updatedProduct = {
-                ...product,
-                // Добавляем другие поля продукта
-            };
+            await axios.put(`https://brand-outlet.shop/api/products/${product.id}`, updatedData);
 
-            await axios.put(`https://brand-outlet.shop/api/products/${product.id}`, updatedProduct);
-
-            const updatedProducts = products.map((p) =>
-                p.id === product.id ? updatedProduct : p
-            );
+            const updatedProducts = products.map((p) => {
+                if (p.id === product.id) {
+                    // Обновляем информацию о размерах и ценах для товара
+                    return {
+                        ...p,
+                        sizes: product.sizes,
+                    };
+                }
+                return p;
+            });
 
             setProducts(updatedProducts);
         } catch (error) {
             console.error("Ошибка при обновлении товара:", error);
         }
     };
+
+
+    function arraysAreEqual(arr1: ProductSize[], arr2: ProductSize[]): boolean {
+        if (arr1.length !== arr2.length) {
+            return false;
+        }
+
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i].size !== arr2[i].size || arr1[i].priceYuan !== arr2[i].priceYuan|| arr1[i].deliveryPrice !== arr2[i].deliveryPrice) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
     const handleSaveCategory = async (category: Category) => {
         try {
@@ -152,7 +185,7 @@ function AdminPanel() {
 
     const handleDeleteCategory = async (categoryId: number) => {
         try {
-            await axios.delete(`https://brand-outlet.shop/api/products/${categoryId}`);
+            await axios.delete(`https://brand-outlet.shop/api/category/${categoryId}`);
             const updatedCategories = categories.filter(
                 (category) => category.id !== categoryId
             );
@@ -160,9 +193,6 @@ function AdminPanel() {
         } catch (error) {
             console.error("Ошибка при удалении категории:", error);
         }
-    };
-    const handleImageLoad = (url: string) => {
-        URL.revokeObjectURL(url);
     };
 
     return (
@@ -194,8 +224,22 @@ function AdminPanel() {
 
                             <td className="border border-gray-400 px-4 py-2">{product.title}</td>
                             <td className="border border-gray-400 px-4 py-2">{product.categoryName}</td>
-                            <td className="border border-gray-400 px-4 py-2">{product.price} ₽</td>
-                            <td className="border border-gray-400 px-4 py-2">{product.size}</td>
+                            <td className="border border-gray-400 px-4 py-2">
+                                {/* Отображение цен */}
+                                {product.sizes.map((size, index) => (
+                                    <div key={index}>
+                                        {size.priceRub} ₽
+                                    </div>
+                                ))}
+                            </td>
+                            <td className="border border-gray-400 px-4 py-2">
+                                {/* Отображение размеров */}
+                                {product.sizes.map((size, index) => (
+                                    <div key={index}>
+                                        {size.size}
+                                    </div>
+                                ))}
+                            </td>
                             <td className="border border-gray-400 px-4 py-2">
                                 {editingProduct !== null && editingProduct.id === product.id ? (
                                     <ProductEditForm
@@ -204,24 +248,27 @@ function AdminPanel() {
                                         onCancel={handleCancelEdit}
                                     />
                                 ) : (
-                                    <button
-                                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-2 rounded mr-2"
-                                        onClick={() => handleEditProduct(product)}
-                                    >
-                                        Редактировать
-                                    </button>
+                                    <div>
+                                        <button
+                                            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-2 rounded mr-2"
+                                            onClick={() => handleEditProduct(product)}
+                                        >
+                                            Редактировать
+                                        </button>
+                                        <button
+                                            className="bg-red-500 hover.bg-red-600 text-white font-semibold py-1 px-2 rounded"
+                                            onClick={() => handleDeleteProduct(product.id)}
+                                        >
+                                            Удалить
+                                        </button>
+                                    </div>
                                 )}
-                                <button
-                                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded"
-                                    onClick={() => handleDeleteProduct(product.id)}
-                                >
-                                    Удалить
-                                </button>
                             </td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
+
                 <button
                     className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
                     onClick={() => setaddProduct(initialProduct)}
@@ -231,16 +278,20 @@ function AdminPanel() {
                 {addProduct !== null && (
                     <ProductForm
                         initialProduct={addProduct}
-                        onSave={(product, image1, image2) => handleSaveProduct(product, image1, image2)}
+                        onSave={(product,  image1, image2, sizes) => handleSaveProduct(product, image1, image2, sizes)}
                         onCancel={handleCancelEdit}
                         categories={categories}
+                        sizes={sizes} // Передаем sizes в компонент ProductForm
                     />
+
+
                 )}
+
             </div>
 
 
             <div>
-                <h2>Категории</h2>
+                <h2 className="text-2xl font-semibold mb-4">Категории</h2>
                 <table className="border-collapse border border-gray-400 w-full">
                     <thead>
                     <tr className="bg-gray-200">

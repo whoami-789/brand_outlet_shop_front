@@ -4,7 +4,7 @@ import {Products_Unlimited} from "../components/Product_unlimited";
 import {InputAdornment, TextField} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import axios from "axios";
-import {Product} from "../models";
+import {IProduct, Product} from "../models";
 import {CartButton} from "../components/CartButton";
 import {Link} from "react-router-dom"; // Импортируйте компонент кнопки корзины
 

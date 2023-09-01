@@ -1,12 +1,17 @@
-
 export interface Product {
     id: number;
     title: string;
-    size: string;
-    img1: string; // Используйте image1Path
-    img2: string; // Используйте image2Path
-    price: number;
+    sizes: { size: string; priceRub?: number, priceYuan: number, deliveryPrice: number }[];
+    img1: string;
+    img2: string;
     categoryName: string;
+}
+
+export interface ProductSize {
+    size: string;
+    priceRub?: number;
+    priceYuan: number,
+    deliveryPrice: number;
 }
 
 export interface ProductCreate {
