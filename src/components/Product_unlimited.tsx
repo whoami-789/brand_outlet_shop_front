@@ -34,7 +34,7 @@ export function Products_Unlimited({product}: ProductsProps) {
 
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
-    const [selectedSize, setSelectedSize] = useState<ProductSize | null>(null); // Состояние для выбранного размера
+    const [selectedSize, setSelectedSize] = useState<string>("");
 
     const [size, setSize] = React.useState('');
 
@@ -46,9 +46,23 @@ export function Products_Unlimited({product}: ProductsProps) {
         setActiveStep(step);
     };
 
-    const handleSizeChange = (selected: ProductSize | null) => {
-        setSelectedSize(selected);
+    const handleSizeChange = (event: SelectChangeEvent<string>) => {
+        setSelectedSize(event.target.value);
     };
+
+
+    // Найти цену для выбранного размера
+    let selectedPrice: string = "";
+    if (selectedSize) {
+        const selectedSizeObj: ProductSize | undefined = product.sizes.find(
+            (size) => size.size === selectedSize
+        );
+
+        if (selectedSizeObj) {
+            selectedPrice = `${selectedSizeObj.priceRub} ₽`;
+        }
+    }
+
     return (
         <>
             <div className="ml-2">
@@ -93,26 +107,29 @@ export function Products_Unlimited({product}: ProductsProps) {
 
                     <div className="ml-4 mt-1.5">
                         <p className="text-xs">{product.title}</p>
-                        {/* Выбор размера */}
-                        <Select
-                            value={selectedSize}
-                            onChange={(event) => handleSizeChange(event.target.value as ProductSize)}
-                            displayEmpty
-                            fullWidth
-                            variant="outlined"
-                            sx={{ marginTop: 1 }}
-                        >
-                            <MenuItem disabled>
-                                Выберите размер
-                            </MenuItem>
-                            {product.sizes.map((size, index) => (
-                                <MenuItem key={index} value={size.size}>
-                                    {size.size})
-                                    <span className="price-display">Цена: {size.priceRub} ₽</span>
+                        <FormControl>
+                            <InputLabel>Размер</InputLabel>
+                            <Select
+                                label="Размер"
+                                value={selectedSize}
+                                onChange={handleSizeChange}
+                                sx={{ width: 120 }}
+                            >
+                                <MenuItem value="">
+                                    Выберите размер
                                 </MenuItem>
-                            ))}
-
-                        </Select>
+                                {product.sizes.map((size, index) => (
+                                    <MenuItem key={index} value={size.size}>
+                                        {size.size} ({size.priceRub} ₽)
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        {selectedSize && (
+                            <p className="font-bold text-sm">
+                                {product.sizes.find(size => size.size === selectedSize)?.priceRub} ₽
+                            </p>
+                        )}
                     </div>
                     <div className="ml-4 z-1">
                         <div className="ml-2 mt-0 self-center w-full relative z-10">
