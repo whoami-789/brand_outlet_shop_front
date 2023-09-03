@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useState} from "react";
 import {
     Box,
     Button, FormControl, InputLabel, MenuItem, Select,
@@ -8,7 +8,6 @@ import {
 import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
-import {useProducts} from "../hooks/products";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -29,24 +28,17 @@ export function Products_Unlimited({product}: ProductsProps) {
         },
     ]
 
-    const {products, loading, error} = useProducts()
 
 
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [selectedSize, setSelectedSize] = useState<string>("");
 
-    const [size, setSize] = React.useState('');
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setSize(event.target.value as string);
-
-    };
     const handleStepChange = (step: number) => {
         setActiveStep(step);
     };
 
-    const handleSizeChange = (event: SelectChangeEvent<string>) => {
+    const handleSizeChange = (event: SelectChangeEvent) => {
         setSelectedSize(event.target.value);
     };
 
@@ -105,15 +97,34 @@ export function Products_Unlimited({product}: ProductsProps) {
                         </AutoPlaySwipeableViews>
                     </div>
 
-                    <div className="ml-4 mt-1.5">
-                        <p className="text-xs">{product.title}</p>
-                        <FormControl className="min-w-[120px]">
-                            <InputLabel>Размер</InputLabel>
+                    <div className="ml-6 mt-1.5">
+                        <p className="text-m mb-1">{product.title}</p>
+                        <FormControl className="w-[120px]">
+                            <InputLabel
+                                sx={{
+                                    mt: '-8px',
+                                    fontSize: '12px',
+                                    color: "white",
+                                }}
+                            >
+                                Размер
+                            </InputLabel>
                             <Select
                                 label="Размер"
                                 value={selectedSize}
                                 onChange={handleSizeChange}
-                                className="h-8" // Уменьшаем высоту селекта
+                                className="h-8 bg-black text-white"
+                                sx={{
+                                    "& .MuiSelect-icon": {
+                                        color: 'white', // Цвет стрелки
+                                    },
+                                    "& .MuiSelect-select.MuiSelect-select": {
+                                        color: 'white', // Цвет текста
+                                    },
+                                    "& .MuiInputLabel-root": {
+                                        color: 'white', // Цвет метки
+                                    },
+                                }}
                             >
                                 <MenuItem value="">
                                     Выберите размер
