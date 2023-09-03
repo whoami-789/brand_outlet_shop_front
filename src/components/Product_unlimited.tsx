@@ -8,6 +8,7 @@ import {
 import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
+import axios from "axios";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -53,6 +54,29 @@ export function Products_Unlimited({product}: ProductsProps) {
             selectedPrice = `${selectedSizeObj.priceRub} ₽`;
         }
     }
+
+    // Функция для добавления товара в корзину
+    const addToCart = () => {
+        if (selectedSize) {
+            const selectedProductSize = product.sizes.find(
+                (size) => size.size === selectedSize
+            );
+
+            if (selectedProductSize) {
+                axios.post('https://brand-outlet.shop/api/cart/add', {
+                    productId: product.id,
+                    size: selectedSize,
+                })
+                    .then((response) => {
+                        console.log('Товар успешно добавлен в корзину', response.data);
+                        // Обновите состояние корзины на клиенте, если необходимо
+                    })
+                    .catch((error) => {
+                        console.error('Ошибка при добавлении товара в корзину', error);
+                    });
+            }
+        }
+    };
 
     return (
         <>
@@ -147,6 +171,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                     <div className="ml-4 z-1">
                         <div className="ml-2 mt-0 self-center w-full relative z-10">
                             <Button
+                                onClick={addToCart} // Добавляем товар в корзину при клике
                                 sx={{
                                     mt: 1,
                                     mb: 2,
@@ -157,7 +182,8 @@ export function Products_Unlimited({product}: ProductsProps) {
                                         background: "#767676",
                                     },
                                 }}
-                                variant="contained">В корзину</Button>
+                                variant="contained"
+                            >В корзину</Button>
                         </div>
                     </div>
                 </Box>
