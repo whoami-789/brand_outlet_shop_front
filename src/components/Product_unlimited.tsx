@@ -7,25 +7,25 @@ import {
 } from "@mui/material";
 import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
-import {Product} from "../models";
+import {IProduct, Product} from "../models";
 import {useProducts} from "../hooks/products";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 interface ProductsProps {
-    product: Product
+    product: IProduct
 }
 
 export function Products_Unlimited({product}: ProductsProps) {
     const images = [
         {
             label: product.title,
-            imgPath: product.img1,
+            imgPath: product.image,
         },
         {
             label: product.title,
-            imgPath: product.img2,
+            imgPath: product.image,
         },
     ]
 
