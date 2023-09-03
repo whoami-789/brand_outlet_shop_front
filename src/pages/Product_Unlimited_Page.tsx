@@ -23,18 +23,22 @@ export function Product_Unlimited_Page() {
     const [hasMore, setHasMore] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [cartVisible, setCartVisible] = useState(false); // Состояние для видимости корзины
+    const [dataFetched, setDataFetched] = useState(false);
+
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            if (!hasMore || loading) return;
+        const fetchData = async () => {
+            if (dataFetched || !hasMore || loading) return;
             setLoading(true);
             try {
-                const response = await axios.get<Product[]>(`https://brand-outlet.shop/api/products/?timestamp=${Date.now()}`);
+                const response = await axios.get<Product[]>(`https://brand-outlet.shop/api/products/`);
                 if (response.data.length === 0) {
                     setHasMore(false);
                 } else {
+                    setHasMore(true);
                     const uniqueCategories = getUniqueCategories(response.data);
                     setCategories(uniqueCategories);
+                    setDataFetched(true); // Устанавливаем флаг, что данные были загружены
                 }
             } catch (error) {
                 console.error('Ошибка при получении данных о продуктах:', error);
@@ -42,8 +46,9 @@ export function Product_Unlimited_Page() {
             setLoading(false);
         };
 
-        fetchProducts();
-    }, [loading, hasMore]);
+        fetchData();
+    }, [loading, hasMore, dataFetched]);
+
 
     const filteredProducts = selectedCategory
         ? products.filter(product => product.categoryName === selectedCategory)
