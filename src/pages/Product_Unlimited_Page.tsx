@@ -29,7 +29,7 @@ export function Product_Unlimited_Page() {
             if (!hasMore || loading) return;
             setLoading(true);
             try {
-                const response = await axios.get<Product[]>(`https://brand-outlet.shop/api/products/`);
+                const response = await axios.get<Product[]>(`https://brand-outlet.shop/api/products/?timestamp=${Date.now()}`);
                 if (response.data.length === 0) {
                     setHasMore(false);
                 } else {
