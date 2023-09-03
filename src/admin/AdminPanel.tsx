@@ -51,15 +51,13 @@ function AdminPanel() {
 
         try {
             const formData = new FormData();
-            // Объединяем все данные в один объект
             const requestData = {
                 id: product.id,
                 title: product.title,
                 categoryName: product.categoryName,
-                sizes: sizes, // Используйте актуальное состояние размеров (sizes) из вашего компонента
+                sizes: sizes,
             };
 
-            // Преобразуем requestData в JSON и добавляем его в formData
             formData.append("productDTO", JSON.stringify(requestData));
             formData.append("image1", image1);
             formData.append("image2", image2);
@@ -76,12 +74,14 @@ function AdminPanel() {
                 config
             );
 
+
             setProducts([...products, response.data]);
             setaddProduct(null);
         } catch (error) {
             console.error("Ошибка при сохранении товара:", error);
         }
     };
+
 
 
     const handleUpdateProduct = async (product: Product) => {
