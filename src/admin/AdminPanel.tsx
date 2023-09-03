@@ -28,7 +28,6 @@ function AdminPanel() {
     const [sizes, setSizes] = useState<ProductSize[]>([]);
 
 
-
     useEffect(() => {
         axios.get<Product[]>("https://brand-outlet.shop/api/products/")
             .then(response => {
@@ -133,7 +132,7 @@ function AdminPanel() {
         }
 
         for (let i = 0; i < arr1.length; i++) {
-            if (arr1[i].size !== arr2[i].size || arr1[i].priceYuan !== arr2[i].priceYuan|| arr1[i].deliveryPrice !== arr2[i].deliveryPrice) {
+            if (arr1[i].size !== arr2[i].size || arr1[i].priceYuan !== arr2[i].priceYuan || arr1[i].deliveryPrice !== arr2[i].deliveryPrice) {
                 return false;
             }
         }
@@ -144,16 +143,10 @@ function AdminPanel() {
 
     const handleSaveCategory = async (category: Category) => {
         try {
-            if (editingCategory) {
-                await axios.put(`ССЫЛКА_ДЛЯ_ИЗМЕНЕНИЯ_КАТЕГОРИИ/${category.id}`, category);
-                const updatedCategories = categories.map((c) =>
-                    c.id === category.id ? category : c
-                );
-                setCategories(updatedCategories);
-            } else {
-                const response = await axios.post("https://brand-outlet.shop/api/category/create", category);
-                setCategories([...categories, response.data]);
-            }
+
+            const response = await axios.post("https://brand-outlet.shop/api/category/create", category);
+            setCategories([...categories, response.data]);
+
             setEditingCategory(null);
         } catch (error) {
             console.error("Ошибка при сохранении категории:", error);
@@ -278,7 +271,7 @@ function AdminPanel() {
                 {addProduct !== null && (
                     <ProductForm
                         initialProduct={addProduct}
-                        onSave={(product,  image1, image2, sizes) => handleSaveProduct(product, image1, image2, sizes)}
+                        onSave={(product, image1, image2, sizes) => handleSaveProduct(product, image1, image2, sizes)}
                         onCancel={handleCancelEdit}
                         categories={categories}
                         sizes={sizes} // Передаем sizes в компонент ProductForm
