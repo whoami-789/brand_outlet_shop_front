@@ -13,12 +13,11 @@ function CategoryForm({ initialCategory, onSave, onCancel }: CategoryFormProps) 
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
         try {
-            const response = await axios.post<Category>("https://brand-outlet.shop/api/category/create", category);
-            onSave(response.data);
-            setCategory(initialCategory);
+            onSave(category);
         } catch (error) {
-            console.error("Ошибка при добавлении категории:", error);
+            console.error("Ошибка при сохранении категории:", error);
         }
     };
 
