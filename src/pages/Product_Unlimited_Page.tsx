@@ -37,12 +37,14 @@ export function Product_Unlimited_Page() {
                     const uniqueCategories = getUniqueCategories(response.data);
                     setCategories(uniqueCategories);
                 }
+                console.log("пиец")
             } catch (error) {
                 console.error('Ошибка при получении данных о продуктах:', error);
             }
+            console.log("норм")
             setLoading(false);
         };
-
+        console.log("пиец")
         fetchProducts();
     }, [loading, hasMore]);
 
