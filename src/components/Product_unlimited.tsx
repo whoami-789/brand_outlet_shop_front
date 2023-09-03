@@ -29,7 +29,6 @@ export function Products_Unlimited({product}: ProductsProps) {
     ]
 
 
-
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [selectedSize, setSelectedSize] = useState<string>("");
@@ -72,10 +71,10 @@ export function Products_Unlimited({product}: ProductsProps) {
                             index={activeStep}
                             onChangeIndex={handleStepChange}
                             enableMouseEvents
-                            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
                         >
                             {images.map((step, index) => (
-                                <div className="mt-1" key={index} style={{ height: 140 }}>
+                                <div className="mt-1" key={index} style={{height: 140}}>
                                     {Math.abs(activeStep - index) <= 2 ? (
                                         <Box
                                             component="img"
@@ -130,7 +129,10 @@ export function Products_Unlimited({product}: ProductsProps) {
                                     Выберите размер
                                 </MenuItem>
                                 {product.sizes.map((size, index) => (
-                                    <MenuItem key={index} value={size.size}>
+                                    <MenuItem key={index} value={size.size}
+                                              sx={{
+                                                  fontSize: '12px',
+                                              }}>
                                         {size.size})
                                     </MenuItem>
                                 ))}
