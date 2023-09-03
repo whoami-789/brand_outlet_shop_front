@@ -33,18 +33,15 @@ export function Product_Unlimited_Page() {
                 if (response.data.length === 0) {
                     setHasMore(false);
                 } else {
-                    setHasMore(true);
                     const uniqueCategories = getUniqueCategories(response.data);
                     setCategories(uniqueCategories);
                 }
-                console.log("пиец")
             } catch (error) {
                 console.error('Ошибка при получении данных о продуктах:', error);
             }
-            console.log("норм")
             setLoading(false);
         };
-        console.log("пиец")
+
         fetchProducts();
     }, [loading, hasMore]);
 
@@ -55,6 +52,7 @@ export function Product_Unlimited_Page() {
     const handleCategoryClick = (category: string) => {
         setSelectedCategory(category);
     };
+
 
     return (
         <div className="relative bg-gray-300 w-full h-full">
