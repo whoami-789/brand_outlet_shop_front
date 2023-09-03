@@ -8,10 +8,10 @@ import {IProduct, Product} from "../models";
 import {CartButton} from "../components/CartButton";
 import {Link} from "react-router-dom"; // Импортируйте компонент кнопки корзины
 
-function getUniqueCategories(products: IProduct[]) {
+function getUniqueCategories(products: Product[]) {
     const uniqueCategories = new Set<string>();
     products.forEach((product) => {
-        uniqueCategories.add(product.category);
+        uniqueCategories.add(product.categoryName);
     });
     return Array.from(uniqueCategories);
 }
@@ -29,7 +29,7 @@ export function Product_Unlimited_Page() {
             if (!hasMore || loading) return;
             setLoading(true);
             try {
-                const response = await axios.get<IProduct[]>(`https://fakestoreapi.com/products?limit=5`);
+                const response = await axios.get<Product[]>(`https://brand-outlet.shop/api/products/`);
                 if (response.data.length === 0) {
                     setHasMore(false);
                 } else {
