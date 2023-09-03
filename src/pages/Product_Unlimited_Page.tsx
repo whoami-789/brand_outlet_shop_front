@@ -56,19 +56,19 @@ export function Product_Unlimited_Page() {
 
     return (
         <div className="relative bg-gray-300 w-full h-full">
-            <div className="mb-3 ml-16">
-                <TextField
-                    id="input-with-icon-textfield"
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon/>
-                            </InputAdornment>
-                        ),
-                    }}
-                    variant="standard"
-                />
-            </div>
+            {/*<div className="mb-3 ml-16">*/}
+            {/*    <TextField*/}
+            {/*        id="input-with-icon-textfield"*/}
+            {/*        InputProps={{*/}
+            {/*            startAdornment: (*/}
+            {/*                <InputAdornment position="start">*/}
+            {/*                    <SearchIcon/>*/}
+            {/*                </InputAdornment>*/}
+            {/*            ),*/}
+            {/*        }}*/}
+            {/*        variant="standard"*/}
+            {/*    />*/}
+            {/*</div>*/}
             <div className="flex overflow-x-scroll whitespace-nowrap">
                 {categories.map((category, index) => (
                     <div
