@@ -107,13 +107,13 @@ export function Products_Unlimited({product}: ProductsProps) {
 
                     <div className="ml-4 mt-1.5">
                         <p className="text-xs">{product.title}</p>
-                        <FormControl>
+                        <FormControl className="min-w-[120px]">
                             <InputLabel>Размер</InputLabel>
                             <Select
                                 label="Размер"
                                 value={selectedSize}
                                 onChange={handleSizeChange}
-                                sx={{ width: 120 }}
+                                className="h-8" // Уменьшаем высоту селекта
                             >
                                 <MenuItem value="">
                                     Выберите размер
@@ -126,8 +126,8 @@ export function Products_Unlimited({product}: ProductsProps) {
                             </Select>
                         </FormControl>
                         {selectedSize && (
-                            <p className="font-bold text-sm">
-                                {product.sizes.find(size => size.size === selectedSize)?.priceRub} ₽
+                            <p className="font-bold text-sm mt-2">
+                                Цена: {product.sizes.find(size => size.size === selectedSize)?.priceRub} ₽
                             </p>
                         )}
                     </div>
