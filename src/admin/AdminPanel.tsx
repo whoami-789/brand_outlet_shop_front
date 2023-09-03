@@ -67,6 +67,7 @@ function AdminPanel() {
             const config = {
                 headers: {
                     "Content-Type": "multipart/form-data",
+                    "Origin": "https://melodic-trifle-5647a1.netlify.app/" // Замените на адрес вашего фронтенда
                 },
             };
 
