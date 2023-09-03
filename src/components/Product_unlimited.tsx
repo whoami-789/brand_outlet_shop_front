@@ -133,7 +133,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                                               sx={{
                                                   fontSize: '12px',
                                               }}>
-                                        {size.size})
+                                        {size.size}
                                     </MenuItem>
                                 ))}
                             </Select>
