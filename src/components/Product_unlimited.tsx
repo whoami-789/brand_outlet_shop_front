@@ -131,7 +131,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                                 </MenuItem>
                                 {product.sizes.map((size, index) => (
                                     <MenuItem key={index} value={size.size}>
-                                        {size.size} ({size.priceRub} ₽)
+                                        {size.size})
                                     </MenuItem>
                                 ))}
                             </Select>
