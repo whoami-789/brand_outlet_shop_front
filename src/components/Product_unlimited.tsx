@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Box,
     Button, FormControl, InputLabel, MenuItem, Select,
@@ -9,7 +9,7 @@ import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
-import {sessionToken} from "../sessionToken";
+import {generateSessionToken, sessionToken} from "../sessionToken";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -34,6 +34,8 @@ export function Products_Unlimited({product}: ProductsProps) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [selectedSize, setSelectedSize] = useState<string>("");
+    const [sessionToken, setSessionToken] = useState(""); // Состояние для хранения токена сессии
+
 
     const handleStepChange = (step: number) => {
         setActiveStep(step);
@@ -43,6 +45,11 @@ export function Products_Unlimited({product}: ProductsProps) {
         setSelectedSize(event.target.value);
     };
 
+    useEffect(() => {
+        if (!sessionToken) {
+            generateSessionToken(); // Вызываем функцию только если токен еще не сохранен
+        }
+    }, [sessionToken]);
 
     // Найти цену для выбранного размера
     let selectedPrice: string = "";
