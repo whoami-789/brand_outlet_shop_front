@@ -1,17 +1,28 @@
 import axios from "axios";
+import { useState } from "react";
 
-let sessionToken: string = ""; // Используйте пустую строку, а не null
+// Инициализация токена пустой строкой
+const initialSessionToken = "";
 
-export async function generateSessionToken() {
-    try {
-        console.log('Запрос на генерацию токена сессии отправлен');
-        const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
-        sessionToken = response.data.sessionToken;
-        console.log('Сессионный токен получен:', sessionToken);
-    } catch (error) {
-        alert("asd")
-        console.error('Ошибка при генерации токена сессии:', error);
+export function useSessionToken() {
+    // Используйте useState для управления токеном
+    const [sessionToken, setSessionToken] = useState(initialSessionToken);
+
+    // Функция для генерации токена
+    async function generateSessionToken() {
+        try {
+            console.log('Запрос на генерацию токена сессии отправлен');
+            const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
+            const newSessionToken = response.data.sessionToken;
+            console.log('Сессионный токен получен:', newSessionToken);
+
+            // Обновите состояние с полученным токеном
+            setSessionToken(newSessionToken);
+        } catch (error) {
+            console.error('Ошибка при генерации токена сессии:', error);
+        }
     }
-}
 
-export { sessionToken };
+    // Возвращаем текущий токен и функцию для его обновления
+    return { sessionToken, generateSessionToken };
+}
