@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {useProducts} from "../hooks/products";
 import {Products_Unlimited} from "../components/Product_unlimited";
-import {InputAdornment, TextField} from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
 import axios from "axios";
-import {IProduct, Product} from "../models";
+import {Product} from "../models";
 import {CartButton} from "../components/CartButton";
-import {Link} from "react-router-dom"; // Импортируйте компонент кнопки корзины
+import {Link} from "react-router-dom";
+import {generateSessionToken} from "../sessionToken"; // Импортируйте компонент кнопки корзины
 
 function getUniqueCategories(products: Product[]) {
     const uniqueCategories = new Set<string>();
@@ -24,6 +23,7 @@ export function Product_Unlimited_Page() {
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [cartVisible, setCartVisible] = useState(false); // Состояние для видимости корзины
     const [dataFetched, setDataFetched] = useState(false);
+    const [sessionToken, setSessionToken] = useState(""); // Состояние для хранения токена сессии
 
 
     useEffect(() => {
@@ -49,6 +49,11 @@ export function Product_Unlimited_Page() {
         fetchData();
     }, [loading, hasMore, dataFetched]);
 
+    useEffect(() => {
+        if (!sessionToken) {
+            generateSessionToken(); // Вызываем функцию только если токен еще не сохранен
+        }
+    }, [sessionToken]);
 
     const filteredProducts = selectedCategory
         ? products.filter(product => product.categoryName === selectedCategory)

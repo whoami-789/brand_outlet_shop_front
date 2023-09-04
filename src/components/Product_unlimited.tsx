@@ -9,6 +9,7 @@ import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
+import {sessionToken} from "../sessionToken";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -63,10 +64,14 @@ export function Products_Unlimited({product}: ProductsProps) {
             );
 
             if (selectedProductSize) {
-                axios.post('https://brand-outlet.shop/api/cart/add', {
+                const requestData = {
                     productId: product.id,
-                    size: selectedSize,
-                })
+                    quantity: 1,
+                    productSizeId: selectedProductSize.id, // Извлекаем id размера из объекта
+                    sessionToken: sessionToken,
+                };
+
+                axios.post('https://brand-outlet.shop/api/cart/add', requestData)
                     .then((response) => {
                         console.log('Товар успешно добавлен в корзину', response.data);
                         // Обновите состояние корзины на клиенте, если необходимо

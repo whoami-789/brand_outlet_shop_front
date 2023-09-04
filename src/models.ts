@@ -1,13 +1,14 @@
 export interface Product {
     id: number;
     title: string;
-    sizes: { size: string; priceRub?: number, priceYuan: number, deliveryPrice: number }[];
+    sizes: {id?: number; size: string; priceRub?: number, priceYuan: number, deliveryPrice: number }[];
     img1: string;
     img2: string;
     categoryName: string;
 }
 
 export interface ProductSize {
+    id?: number;
     size: string;
     priceRub?: number;
     priceYuan: number,
