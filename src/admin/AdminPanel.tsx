@@ -29,7 +29,7 @@ function AdminPanel() {
 
 
     useEffect(() => {
-        axios.get<Product[]>("https://brand-outlet.shop/api/products/")
+        axios.get<Product[]>("/api/products/")
             .then(response => {
                 setProducts(response.data);
             })
@@ -37,7 +37,7 @@ function AdminPanel() {
                 console.error("Ошибка при получении данных о товарах:", error);
             });
 
-        axios.get<Category[]>("https://brand-outlet.shop/api/category/all")
+        axios.get<Category[]>("/api/category/all")
             .then(response => {
                 setCategories(response.data);
             })
@@ -70,7 +70,7 @@ function AdminPanel() {
             };
 
             const response = await axios.post<Product>(
-                "https://brand-outlet.shop/api/products/create",
+                "/api/products/create",
                 formData,
                 config
             );
@@ -106,7 +106,7 @@ function AdminPanel() {
                 return;
             }
 
-            await axios.put(`https://brand-outlet.shop/api/products/${product.id}`, updatedData);
+            await axios.put(`/api/products/${product.id}`, updatedData);
 
             const updatedProducts = products.map((p) => {
                 if (p.id === product.id) {
@@ -144,7 +144,7 @@ function AdminPanel() {
     const handleSaveCategory = async (category: Category) => {
         try {
 
-            const response = await axios.post("https://brand-outlet.shop/api/category/create", category);
+            const response = await axios.post("/api/category/create", category);
             setCategories([...categories, response.data]);
 
             setEditingCategory(null);
@@ -168,7 +168,7 @@ function AdminPanel() {
 
     const handleDeleteProduct = async (productId: number) => {
         try {
-            await axios.delete(`https://brand-outlet.shop/api/products/${productId}`);
+            await axios.delete(`/api/products/${productId}`);
             const updatedProducts = products.filter((product) => product.id !== productId);
             setProducts(updatedProducts);
         } catch (error) {
@@ -178,7 +178,7 @@ function AdminPanel() {
 
     const handleDeleteCategory = async (categoryId: number) => {
         try {
-            await axios.delete(`https://brand-outlet.shop/api/category/${categoryId}`);
+            await axios.delete(`/api/category/${categoryId}`);
             const updatedCategories = categories.filter(
                 (category) => category.id !== categoryId
             );

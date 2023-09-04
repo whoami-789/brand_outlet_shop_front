@@ -71,7 +71,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                     sessionToken: sessionToken,
                 };
 
-                axios.post('https://brand-outlet.shop/api/cart/add', requestData)
+                axios.post('/api/cart/add', requestData)
                     .then((response) => {
                         console.log('Товар успешно добавлен в корзину', response.data);
                         // Обновите состояние корзины на клиенте, если необходимо
