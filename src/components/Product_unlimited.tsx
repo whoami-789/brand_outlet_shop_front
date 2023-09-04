@@ -9,6 +9,7 @@ import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
+import {sessionToken} from "../sessionToken";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
