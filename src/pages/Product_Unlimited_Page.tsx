@@ -23,7 +23,8 @@ export function Product_Unlimited_Page() {
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [cartVisible, setCartVisible] = useState(false); // Состояние для видимости корзины
     const [dataFetched, setDataFetched] = useState(false);
-    const [localSessionToken, setLocalSessionToken] = useState("");
+    const [sessionToken, setSessionToken] = useState(""); // Состояние для хранения токена сессии
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,14 +50,10 @@ export function Product_Unlimited_Page() {
     }, [loading, hasMore, dataFetched]);
 
     useEffect(() => {
-        if (!localSessionToken) {
-            generateSessionToken((newToken) => {
-                setLocalSessionToken(newToken); // Обновляем локальное состояние токена
-            });
+        if (!sessionToken) {
+            generateSessionToken(); // Вызываем функцию только если токен еще не сохранен
         }
-    }, [localSessionToken]);
-
-
+    }, [sessionToken]);
 
     const filteredProducts = selectedCategory
         ? products.filter(product => product.categoryName === selectedCategory)

@@ -9,13 +9,12 @@ import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
-import {generateSessionToken} from "../sessionToken";
+import {sessionToken} from "../sessionToken";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 interface ProductsProps {
-
     product: Product
 }
 
@@ -65,27 +64,24 @@ export function Products_Unlimited({product}: ProductsProps) {
             );
 
             if (selectedProductSize) {
-                generateSessionToken((newToken) => {
-                    const requestData = {
-                        productId: product.id,
-                        quantity: 1,
-                        productSizeId: selectedProductSize.id,
-                        sessionToken: newToken, // Используем новый токен
-                    };
+                const requestData = {
+                    productId: product.id,
+                    quantity: 1,
+                    productSizeId: selectedProductSize.id, // Извлекаем id размера из объекта
+                    sessionToken: sessionToken,
+                };
 
-                    axios.post('https://brand-outlet.shop/api/cart/add', requestData)
-                        .then((response) => {
-                            console.log('Товар успешно добавлен в корзину', response.data);
-                            // Обновите состояние корзины на клиенте, если необходимо
-                        })
-                        .catch((error) => {
-                            console.error('Ошибка при добавлении товара в корзину', error);
-                        });
-                });
+                axios.post('https://brand-outlet.shop/api/cart/add', requestData)
+                    .then((response) => {
+                        console.log('Товар успешно добавлен в корзину', response.data);
+                        // Обновите состояние корзины на клиенте, если необходимо
+                    })
+                    .catch((error) => {
+                        console.error('Ошибка при добавлении товара в корзину', error);
+                    });
             }
         }
     };
-
 
     return (
         <>
