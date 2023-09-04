@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let sessionToken: string | null = null;
+let sessionToken: string = ""; // Используйте пустую строку, а не null
 
 export async function generateSessionToken() {
     try {
