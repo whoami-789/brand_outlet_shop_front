@@ -9,8 +9,7 @@ import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
-import {useSessionToken} from "../sessionToken";
-
+import {sessionToken} from "../sessionToken";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -35,8 +34,6 @@ export function Products_Unlimited({product}: ProductsProps) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [selectedSize, setSelectedSize] = useState<string>("");
-    const { sessionToken } = useSessionToken();
-
 
     const handleStepChange = (step: number) => {
         setActiveStep(step);
