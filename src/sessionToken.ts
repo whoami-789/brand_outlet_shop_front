@@ -9,6 +9,7 @@ export async function generateSessionToken() {
         sessionToken = response.data.sessionToken;
         console.log('Сессионный токен получен:', sessionToken);
     } catch (error) {
+        alert("asd")
         console.error('Ошибка при генерации токена сессии:', error);
     }
 }
