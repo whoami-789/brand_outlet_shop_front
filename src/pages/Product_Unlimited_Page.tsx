@@ -49,7 +49,12 @@ export function Product_Unlimited_Page() {
         fetchData();
     }, [loading, hasMore, dataFetched]);
 
-
+    useEffect(() => {
+        if (!sessionToken) {
+            generateSessionToken(); // Вызываем функцию только если токен еще не сохранен
+        }
+        console.log("tokens: " + sessionToken)
+    }, [sessionToken]);
 
     const filteredProducts = selectedCategory
         ? products.filter(product => product.categoryName === selectedCategory)
