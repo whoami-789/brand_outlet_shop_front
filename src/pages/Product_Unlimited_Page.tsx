@@ -50,10 +50,16 @@ export function Product_Unlimited_Page() {
     }, [loading, hasMore, dataFetched]);
 
     useEffect(() => {
-        if (!sessionToken) {
-            generateSessionToken(); // Вызываем функцию только если токен еще не сохранен
+        async function fetchSessionToken() {
+            const token = await generateSessionToken();
+            if (token) {
+                setSessionToken(token);
+            }
         }
-    }, [sessionToken]);
+
+        fetchSessionToken();
+    }, []);
+
 
     const filteredProducts = selectedCategory
         ? products.filter(product => product.categoryName === selectedCategory)
