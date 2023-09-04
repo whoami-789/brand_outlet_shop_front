@@ -31,7 +31,7 @@ export function Product_Unlimited_Page() {
             if (dataFetched || !hasMore || loading) return;
             setLoading(true);
             try {
-                const response = await axios.get<Product[]>(`/api/products/`);
+                const response = await axios.get<Product[]>(`https://brand-outlet.shop/api/products/`);
                 if (response.data.length === 0) {
                     setHasMore(false);
                 } else {
