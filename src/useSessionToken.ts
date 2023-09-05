@@ -10,24 +10,15 @@ export function useSessionToken() {
     // Функция для генерации токена
     async function generateSessionToken() {
         try {
-            // Проверяем, есть ли токен в локальном хранилище
-            const storedSessionToken = localStorage.getItem(SESSION_TOKEN_KEY);
+            const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
+            const newSessionToken = response.data.sessionToken;
+            console.log('Сессионный токен получен:', newSessionToken);
 
-            if (storedSessionToken) {
-                console.log('Сессионный токен взят из локального хранилища:', storedSessionToken);
-                setSessionToken(storedSessionToken);
-            } else {
-                console.log('Запрос на генерацию токена сессии отправлен');
-                const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
-                const newSessionToken = response.data.sessionToken;
-                console.log('Сессионный токен получен:', newSessionToken);
+            // Сохраните сессионный токен в локальном хранилище
+            localStorage.setItem('sessionToken', newSessionToken);
 
-                // Сохраняем токен в локальное хранилище
-                localStorage.setItem(SESSION_TOKEN_KEY, newSessionToken);
-
-                // Обновите состояние с полученным токеном
-                setSessionToken(newSessionToken);
-            }
+            // Обновите состояние с полученным токеном
+            setSessionToken(newSessionToken);
         } catch (error) {
             console.error('Ошибка при генерации токена сессии:', error);
         }

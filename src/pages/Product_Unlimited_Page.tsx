@@ -5,7 +5,7 @@ import axios from "axios";
 import {Product} from "../models";
 import {CartButton} from "../components/CartButton";
 import {Link} from "react-router-dom";
-import { useSessionToken } from "../useSessionToken"; // Импортируйте ваш хук для токена
+import { useSessionToken } from "../useSessionToken"; // Импортируйте и генератор, и хук
 
 function getUniqueCategories(products: Product[]) {
     const uniqueCategories = new Set<string>();

@@ -34,6 +34,7 @@ export function Products_Unlimited({product}: ProductsProps) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [selectedSize, setSelectedSize] = useState<string>("");
+    const { sessionToken } = useSessionToken(); // Получаем токен из хука
 
     const handleStepChange = (step: number) => {
         setActiveStep(step);
@@ -68,7 +69,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                     productId: product.id,
                     quantity: 1,
                     productSizeId: selectedProductSize.id, // Извлекаем id размера из объекта
-                    sessionToken: useSessionToken,
+                    sessionToken: sessionToken,
                 };
 
                 axios.post('https://brand-outlet.shop/api/cart/add', requestData)
