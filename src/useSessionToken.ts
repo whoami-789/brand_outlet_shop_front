@@ -1,30 +1,28 @@
 import axios from "axios";
+import { useState } from "react";
 
-// Функция для сохранения токена в localStorage
-function setSessionToken(token: string) {
-    localStorage.setItem("sessionToken", token);
-}
+// Инициализация токена пустой строкой
+const initialSessionToken = "";
 
-// Функция для получения токена из localStorage
-function getSessionToken() {
-    return localStorage.getItem("sessionToken");
-}
+export function useSessionToken() {
+    // Используйте useState для управления токеном
+    const [sessionToken, setSessionToken] = useState(initialSessionToken);
 
-let sessionToken: string | null = getSessionToken() || null;
+    // Функция для генерации токена
+    async function generateSessionToken() {
+        try {
+            console.log('Запрос на генерацию токена сессии отправлен');
+            const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
+            const newSessionToken = response.data.sessionToken;
+            console.log('Сессионный токен получен:', newSessionToken);
 
-async function generateSessionToken() {
-    try {
-        console.log('Запрос на генерацию токена сессии отправлен');
-        const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
-        sessionToken = response.data.sessionToken;
-
-        // Сохраняем токен в localStorage
-        setSessionToken(sessionToken);
-        console.log('Сессионный токен получен:', sessionToken);
-        console.log(localStorage)
-    } catch (error) {
-        console.error('Ошибка при генерации токена сессии:', error);
+            // Обновите состояние с полученным токеном
+            setSessionToken(newSessionToken);
+        } catch (error) {
+            console.error('Ошибка при генерации токена сессии:', error);
+        }
     }
-}
 
-export { sessionToken, generateSessionToken };
+    // Возвращаем текущий токен и функцию для его обновления
+    return { sessionToken, generateSessionToken };
+}

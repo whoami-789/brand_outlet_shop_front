@@ -9,7 +9,7 @@ import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
-import {sessionToken} from "../useSessionToken";
+import { useSessionToken } from "../useSessionToken"; // Подключите ваш кастомный хук
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -34,6 +34,7 @@ export function Products_Unlimited({product}: ProductsProps) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [selectedSize, setSelectedSize] = useState<string>("");
+    const { sessionToken, generateSessionToken } = useSessionToken(); // Получаем токен из хука
 
     const handleStepChange = (step: number) => {
         setActiveStep(step);
