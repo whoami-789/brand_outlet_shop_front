@@ -9,12 +9,13 @@ import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
-import {sessionToken} from "../sessionToken";
+import {useSessionToken} from "../useSessionToken";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 interface ProductsProps {
+
     product: Product
 }
 
@@ -43,6 +44,9 @@ export function Products_Unlimited({product}: ProductsProps) {
         setSelectedSize(event.target.value);
     };
 
+
+    // Найти цену для выбранного размера
+    const { sessionToken } = useSessionToken(); // Используйте кастомный хук для получения токена
 
     // Найти цену для выбранного размера
     let selectedPrice: string = "";

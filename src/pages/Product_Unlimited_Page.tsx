@@ -5,7 +5,7 @@ import axios from "axios";
 import {Product} from "../models";
 import {CartButton} from "../components/CartButton";
 import {Link} from "react-router-dom";
-import {generateSessionToken} from "../sessionToken"; // Импортируйте компонент кнопки корзины
+import {useSessionToken} from "../useSessionToken";
 
 function getUniqueCategories(products: Product[]) {
     const uniqueCategories = new Set<string>();
@@ -24,6 +24,7 @@ export function Product_Unlimited_Page() {
     const [cartVisible, setCartVisible] = useState(false); // Состояние для видимости корзины
     const [dataFetched, setDataFetched] = useState(false);
     const [sessionToken, setSessionToken] = useState(""); // Состояние для хранения токена сессии
+    const { generateSessionToken } = useSessionToken();
 
 
     useEffect(() => {
