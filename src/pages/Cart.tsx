@@ -77,10 +77,9 @@ export function Cart_page() {
             <TextField
                 label="Ваш telegramID"
                 variant="outlined"
-                fullWidth
                 value={telegramFeed}
                 onChange={(e) => setTelegramFeed(e.target.value)}
-                className="mb-3"
+                className="mb-3 ml-2 w-40 h-3"
             />
             <Button
                 sx={{
