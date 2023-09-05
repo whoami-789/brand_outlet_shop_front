@@ -9,7 +9,7 @@ import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
-import { useSessionToken } from "../useSessionToken"; // Подключите ваш кастомный хук
+import {useSessionToken} from "../useSessionToken";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -34,7 +34,6 @@ export function Products_Unlimited({product}: ProductsProps) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [selectedSize, setSelectedSize] = useState<string>("");
-    const { sessionToken, generateSessionToken } = useSessionToken(); // Получаем токен из хука
 
     const handleStepChange = (step: number) => {
         setActiveStep(step);
@@ -69,7 +68,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                     productId: product.id,
                     quantity: 1,
                     productSizeId: selectedProductSize.id, // Извлекаем id размера из объекта
-                    sessionToken: sessionToken,
+                    sessionToken: useSessionToken,
                 };
 
                 axios.post('https://brand-outlet.shop/api/cart/add', requestData)
