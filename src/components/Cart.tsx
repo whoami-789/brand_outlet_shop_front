@@ -6,12 +6,23 @@ interface CartProps {
     product: {
         id: number;
         title: string;
-        price: number;
-        image: string;
+        img1: string;
+        img2: string;
+        sizes: any[]; // Здесь нужно определить структуру данных для sizes, если это массив
+        categoryName: string | null;
+    };
+}
+interface SizesProps {
+    productSize: {
+        id: number;
+        size: string;
+        priceRub: number;
+        priceYuan: number;
+        deliveryPrice: number;
     };
 }
 
-export function Cart({product}: CartProps) {
+export function Cart({product}: CartProps, {productSize}: SizesProps) {
     const [quantity, setQuantity] = useState(1);
 
     const handleDecrease = () => {
@@ -44,7 +55,7 @@ export function Cart({product}: CartProps) {
                             }}
                         >
                             <img
-                                src={product.image}
+                                src={product.img1}
                                 alt={product.title}
                                 style={{
                                     width: '100%',
@@ -55,8 +66,8 @@ export function Cart({product}: CartProps) {
                         </div>
                         <div className="ml-4 w-48">
                             <p className="text-sm w-48 truncate">{product.title}</p>
-                            <p className="font-bold text-sm w-40">Размер: </p>
-                            <p className="font-bold text-sm w-40">{product.price} ₽</p>
+                            <p className="font-bold text-sm w-40">Размер: {productSize.size}</p>
+                            <p className="font-bold text-sm w-40">{productSize.priceRub} ₽</p>
                             <Box
                                 sx={{
                                     borderRadius: 1.5,

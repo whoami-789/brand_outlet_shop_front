@@ -12,8 +12,28 @@ interface Product {
     image: string;
 }
 
+interface CartItem {
+    cartItemId: number;
+    product: {
+        id: number;
+        title: string;
+        img1: string;
+        img2: string;
+        sizes: any[]; // Здесь нужно определить структуру данных для sizes, если это массив
+        categoryName: string | null;
+    };
+    productSize: {
+        id: number;
+        size: string;
+        priceRub: number;
+        priceYuan: number;
+        deliveryPrice: number;
+    };
+    quantity: number;
+}
+
 export function Cart_page() {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<CartItem[]>([]); // Используем интерфейс CartItem
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [telegramFeed, setTelegramFeed] = useState<string>("");
 
@@ -38,7 +58,7 @@ export function Cart_page() {
 
     useEffect(() => {
         const calculatedTotalPrice = products.reduce((total, product) => {
-            return total + product.price;
+            return total + product.productSize.priceRub;
         }, 0);
         setTotalPrice(calculatedTotalPrice);
     }, [products]);
@@ -55,7 +75,7 @@ export function Cart_page() {
             </Link>
             <div className="mt-2 inline-block w-full max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide overflow-hidden">
                 {products.map((product) => (
-                    <Cart key={product.id} product={product} />
+                    <Cart key={product.product.id} product={product.product} />
                 ))}
             </div>
             <div className="flex ml-16">
@@ -65,7 +85,7 @@ export function Cart_page() {
                 </p>
             </div>
             <TextField
-                label="Telegram-фид"
+                label="Ваш telegramID"
                 variant="outlined"
                 fullWidth
                 value={telegramFeed}
