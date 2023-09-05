@@ -6,18 +6,17 @@ let sessionToken: string | null = null;
 
 async function generateSessionToken() {
     try {
-        const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
-        const newSessionToken = response.data.sessionToken;
+        const response = await axios.post<string>('https://brand-outlet.shop/api/order/create-session'); // Изменим тип ответа на строку
+        const newSessionToken = response.data; // Токен уже является строкой, не нужно обращаться к response.data.sessionToken
         console.log(newSessionToken);
-        console.log(response)
 
         // Сохраняем токен в localStorage
         localStorage.setItem("sessionToken", newSessionToken);
 
         // Присваиваем его переменной sessionToken
         sessionToken = newSessionToken;
-        console.log(sessionToken)
-        console.log(localStorage.getItem("sessionToken"))
+        console.log(sessionToken);
+        console.log(localStorage.getItem("sessionToken"));
 
         return newSessionToken;
     } catch (error) {
