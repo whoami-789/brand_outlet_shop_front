@@ -74,7 +74,7 @@ export function Cart_page() {
                     {totalPrice.toFixed(2)} ₽
                 </p>
             </div>
-            <div className="mb-6 ml-16">
+            <div className="mb-3 ml-18">
                 <TextField
                     label="Ваш TelegramID"
                     variant="outlined"
