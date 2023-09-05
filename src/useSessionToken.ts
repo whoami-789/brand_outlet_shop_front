@@ -15,6 +15,7 @@ async function generateSessionToken() {
 
         // Присваиваем его переменной sessionToken
         sessionToken = newSessionToken;
+        console.log(sessionToken)
 
         return newSessionToken;
     } catch (error) {
