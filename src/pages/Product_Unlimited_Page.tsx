@@ -5,7 +5,6 @@ import axios from "axios";
 import { Product } from "../models";
 import { CartButton } from "../components/CartButton";
 import { Link } from "react-router-dom";
-import { useSessionToken } from "../useSessionToken"; // Импортируйте хук
 
 function getUniqueCategories(products: Product[]) {
     const uniqueCategories = new Set<string>();
@@ -23,7 +22,12 @@ export function Product_Unlimited_Page() {
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [cartVisible, setCartVisible] = useState(false);
     const [dataFetched, setDataFetched] = useState(false);
-    const { sessionToken, generateSessionToken } = useSessionToken(); // Используйте хук для получения токена
+    const [sessionToken, setSessionToken] = useState(""); // Состояние для хранения токена сессии
+
+    useEffect(() => {
+        // Вызываем функцию для генерации токена при монтировании компонента
+        generateSessionToken();
+    }, []); // Пустой массив завершает вызов useEffect только при монтировании компонента
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,7 +43,7 @@ export function Product_Unlimited_Page() {
                     setHasMore(true);
                     const uniqueCategories = getUniqueCategories(response.data);
                     setCategories(uniqueCategories);
-                    setDataFetched(true);
+                    setDataFetched(true); // Устанавливаем флаг, что данные были загружены
                 }
             } catch (error) {
                 console.error("Ошибка при получении данных о продуктах:", error);
@@ -50,11 +54,21 @@ export function Product_Unlimited_Page() {
         fetchData();
     }, [loading, hasMore, dataFetched]);
 
-    useEffect(() => {
-        if (!sessionToken) {
-            generateSessionToken(); // Вызываем функцию только если токен еще не сохранен
+    const generateSessionToken = async () => {
+        try {
+            console.log("Запрос на генерацию токена сессии отправлен");
+            const response = await axios.post<{ sessionToken: string }>(
+                "https://brand-outlet.shop/api/order/create-session"
+            );
+            const newSessionToken = response.data.sessionToken;
+            console.log("Сессионный токен получен:", newSessionToken);
+
+            // Сохраняем токен в состояние
+            setSessionToken(newSessionToken);
+        } catch (error) {
+            console.error("Ошибка при генерации токена сессии:", error);
         }
-    }, [sessionToken]);
+    };
 
     const filteredProducts = selectedCategory
         ? products.filter((product) => product.categoryName === selectedCategory)

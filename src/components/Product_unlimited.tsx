@@ -13,15 +13,15 @@ import { autoPlay } from "react-swipeable-views-utils";
 import SwipeableViews from "react-swipeable-views";
 import { Product, ProductSize } from "../models";
 import axios from "axios";
-import { useSessionToken } from "../useSessionToken"; // Импортируйте хук
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 interface ProductsProps {
     product: Product;
+    sessionToken: string; // Принимаем токен как пропс
 }
 
-export function Products_Unlimited({ product }: ProductsProps) {
+export function Products_Unlimited({ product, sessionToken }: ProductsProps) {
     const images = [
         {
             label: product.title,
@@ -45,8 +45,6 @@ export function Products_Unlimited({ product }: ProductsProps) {
         setSelectedSize(event.target.value);
     };
 
-    const { sessionToken } = useSessionToken(); // Получите токен из хука
-
     let selectedPrice: string = "";
     if (selectedSize) {
         const selectedSizeObj: ProductSize | undefined = product.sizes.find(
@@ -69,7 +67,7 @@ export function Products_Unlimited({ product }: ProductsProps) {
                     productId: product.id,
                     quantity: 1,
                     productSizeId: selectedProductSize.id,
-                    sessionToken: sessionToken, // Используйте токен из хука
+                    sessionToken: sessionToken, // Используйте пропс sessionToken
                 };
 
                 axios
