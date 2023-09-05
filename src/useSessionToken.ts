@@ -1,29 +1,36 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
-
-const SESSION_TOKEN_KEY = "sessionToken"; // Ключ для хранения токена в локальном хранилище
+import { useEffect, useState } from "react";
 
 export function useSessionToken() {
-    // Используйте useState для управления токеном
     const [sessionToken, setSessionToken] = useState<string | null>(null);
 
-    // Функция для генерации токена
+    // Функция для генерации сессионного токена
     async function generateSessionToken() {
         try {
-            const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
+            console.log("Запрос на генерацию токена сессии отправлен");
+            const response = await axios.post<{ sessionToken: string }>(
+                "https://brand-outlet.shop/api/order/create-session"
+            );
             const newSessionToken = response.data.sessionToken;
-            console.log('Сессионный токен получен:', newSessionToken);
+            console.log("Сессионный токен получен:", newSessionToken);
 
-            // Сохраните сессионный токен в локальном хранилище
-            localStorage.setItem('sessionToken', newSessionToken);
+            // Сохраняем токен в локальном хранилище
+            localStorage.setItem("sessionToken", newSessionToken);
 
-            // Обновите состояние с полученным токеном
+            // Обновляем состояние с полученным токеном
             setSessionToken(newSessionToken);
         } catch (error) {
-            console.error('Ошибка при генерации токена сессии:', error);
+            console.error("Ошибка при генерации токена сессии:", error);
         }
     }
 
-    // Возвращаем текущий токен и функцию для его обновления
+    useEffect(() => {
+        // Попытка получить токен из локального хранилища при монтировании
+        const storedSessionToken = localStorage.getItem("sessionToken");
+        if (storedSessionToken) {
+            setSessionToken(storedSessionToken);
+        }
+    }, []);
+
     return { sessionToken, generateSessionToken };
 }

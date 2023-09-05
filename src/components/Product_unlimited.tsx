@@ -1,24 +1,27 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
     Box,
-    Button, FormControl, InputLabel, MenuItem, Select,
+    Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
     SelectChangeEvent,
-    useTheme
+    useTheme,
 } from "@mui/material";
-import {autoPlay} from 'react-swipeable-views-utils';
-import SwipeableViews from 'react-swipeable-views';
-import {Product, ProductSize} from "../models";
+import { autoPlay } from "react-swipeable-views-utils";
+import SwipeableViews from "react-swipeable-views";
+import { Product, ProductSize } from "../models";
 import axios from "axios";
-import {useSessionToken} from "../useSessionToken";
-
+import { useSessionToken } from "../useSessionToken"; // Импортируйте хук
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 interface ProductsProps {
-    product: Product
+    product: Product;
 }
 
-export function Products_Unlimited({product}: ProductsProps) {
+export function Products_Unlimited({ product }: ProductsProps) {
     const images = [
         {
             label: product.title,
@@ -28,13 +31,11 @@ export function Products_Unlimited({product}: ProductsProps) {
             label: product.title,
             imgPath: product.img2,
         },
-    ]
-
+    ];
 
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [selectedSize, setSelectedSize] = useState<string>("");
-    const { sessionToken } = useSessionToken(); // Получаем токен из хука
 
     const handleStepChange = (step: number) => {
         setActiveStep(step);
@@ -44,8 +45,8 @@ export function Products_Unlimited({product}: ProductsProps) {
         setSelectedSize(event.target.value);
     };
 
+    const { sessionToken } = useSessionToken(); // Получите токен из хука
 
-    // Найти цену для выбранного размера
     let selectedPrice: string = "";
     if (selectedSize) {
         const selectedSizeObj: ProductSize | undefined = product.sizes.find(
@@ -57,9 +58,8 @@ export function Products_Unlimited({product}: ProductsProps) {
         }
     }
 
-    // Функция для добавления товара в корзину
     const addToCart = () => {
-        if (selectedSize) {
+        if (selectedSize && sessionToken) {
             const selectedProductSize = product.sizes.find(
                 (size) => size.size === selectedSize
             );
@@ -68,17 +68,17 @@ export function Products_Unlimited({product}: ProductsProps) {
                 const requestData = {
                     productId: product.id,
                     quantity: 1,
-                    productSizeId: selectedProductSize.id, // Извлекаем id размера из объекта
-                    sessionToken: sessionToken,
+                    productSizeId: selectedProductSize.id,
+                    sessionToken: sessionToken, // Используйте токен из хука
                 };
 
-                axios.post('https://brand-outlet.shop/api/cart/add', requestData)
+                axios
+                    .post("https://brand-outlet.shop/api/cart/add", requestData)
                     .then((response) => {
-                        console.log('Товар успешно добавлен в корзину', response.data);
-                        // Обновите состояние корзины на клиенте, если необходимо
+                        console.log("Товар успешно добавлен в корзину", response.data);
                     })
                     .catch((error) => {
-                        console.error('Ошибка при добавлении товара в корзину', error);
+                        console.error("Ошибка при добавлении товара в корзину", error);
                     });
             }
         }
@@ -90,32 +90,35 @@ export function Products_Unlimited({product}: ProductsProps) {
                 <Box
                     sx={{
                         width: 165,
-                        // height: 260,
-                        backgroundColor: '#ffff',
-                        borderRadius: '7px',
+                        backgroundColor: "#ffff",
+                        borderRadius: "7px",
                     }}
                 >
                     <div>
                         <AutoPlaySwipeableViews
-                            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
                             index={activeStep}
                             onChangeIndex={handleStepChange}
                             enableMouseEvents
-                            style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
                         >
                             {images.map((step, index) => (
-                                <div className="mt-1" key={index} style={{height: 140}}>
+                                <div className="mt-1" key={index} style={{ height: 140 }}>
                                     {Math.abs(activeStep - index) <= 2 ? (
                                         <Box
                                             component="img"
                                             sx={{
-                                                display: 'block',
-                                                overflow: 'hidden',
-                                                maxWidth: '100%',
-                                                maxHeight: '100%',
-                                                width: 'auto',
-                                                height: '100%',
-                                                margin: '0 auto', // Центрирование изображения по горизонтали
+                                                display: "block",
+                                                overflow: "hidden",
+                                                maxWidth: "100%",
+                                                maxHeight: "100%",
+                                                width: "auto",
+                                                height: "100%",
+                                                margin: "0 auto",
                                             }}
                                             src={step.imgPath}
                                             alt={step.label}
@@ -131,8 +134,8 @@ export function Products_Unlimited({product}: ProductsProps) {
                         <FormControl className="w-[120px]">
                             <InputLabel
                                 sx={{
-                                    mt: '-8px',
-                                    fontSize: '12px',
+                                    mt: "-8px",
+                                    fontSize: "12px",
                                     color: "white",
                                 }}
                             >
@@ -145,24 +148,25 @@ export function Products_Unlimited({product}: ProductsProps) {
                                 className="h-8 bg-black text-white"
                                 sx={{
                                     "& .MuiSelect-icon": {
-                                        color: 'white', // Цвет стрелки
+                                        color: "white",
                                     },
                                     "& .MuiSelect-select.MuiSelect-select": {
-                                        color: 'white', // Цвет текста
+                                        color: "white",
                                     },
                                     "& .MuiInputLabel-root": {
-                                        color: 'white', // Цвет метки
+                                        color: "white",
                                     },
                                 }}
                             >
-                                <MenuItem value="">
-                                    Выберите размер
-                                </MenuItem>
+                                <MenuItem value="">Выберите размер</MenuItem>
                                 {product.sizes.map((size, index) => (
-                                    <MenuItem key={index} value={size.size}
-                                              sx={{
-                                                  fontSize: '12px',
-                                              }}>
+                                    <MenuItem
+                                        key={index}
+                                        value={size.size}
+                                        sx={{
+                                            fontSize: "12px",
+                                        }}
+                                    >
                                         {size.size}
                                     </MenuItem>
                                 ))}
@@ -170,30 +174,32 @@ export function Products_Unlimited({product}: ProductsProps) {
                         </FormControl>
                         {selectedSize && (
                             <p className="font-bold text-sm mt-2">
-                                Цена: {product.sizes.find(size => size.size === selectedSize)?.priceRub} ₽
+                                Цена: {product.sizes.find((size) => size.size === selectedSize)?.priceRub} ₽
                             </p>
                         )}
                     </div>
                     <div className="ml-4 z-1">
                         <div className="ml-2 mt-0 self-center w-full relative z-10">
                             <Button
-                                onClick={addToCart} // Добавляем товар в корзину при клике
+                                onClick={addToCart}
                                 sx={{
                                     mt: 1,
                                     mb: 2,
                                     minWidth: 120,
                                     height: 30,
-                                    backgroundColor: '#000000',
-                                    '&:hover': {
+                                    backgroundColor: "#000000",
+                                    "&:hover": {
                                         background: "#767676",
                                     },
                                 }}
                                 variant="contained"
-                            >В корзину</Button>
+                            >
+                                В корзину
+                            </Button>
                         </div>
                     </div>
                 </Box>
             </div>
         </>
-    )
+    );
 }
