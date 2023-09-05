@@ -51,7 +51,8 @@ export function Product_Unlimited_Page() {
 
     useEffect(() => {
         if (!sessionToken) {
-            generateSessionToken(); // Вызываем функцию только если токен еще не сохранен
+            generateSessionToken();
+            setSessionToken(sessionToken)// Вызываем функцию только если токен еще не сохранен
         }
     }, [sessionToken]);
 
