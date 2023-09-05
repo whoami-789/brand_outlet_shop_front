@@ -38,22 +38,21 @@ export function Cart_page() {
     const [telegramFeed, setTelegramFeed] = useState<string>("");
 
     useEffect(() => {
-        // Здесь вы можете добавить логику для отправки запроса на получение данных корзины с использованием токена сессии из localStorage
-
         const sessionToken = localStorage.getItem("sessionToken");
 
         if (sessionToken) {
             axios
                 .get(`https://brand-outlet.shop/api/cart/view?sessionToken=${sessionToken}`)
                 .then((response) => {
-                   console.log(response.data);                    // Обновите состояние с полученными данными корзины
-                    // Например, setCartItems(cartItems);
+                    const cartItems = response.data;
+                    setProducts(cartItems); // Обновите состояние с полученными данными корзины
                 })
                 .catch((error) => {
                     console.error("Ошибка при получении данных корзины:", error);
                 });
         }
     }, []);
+
 
 
     useEffect(() => {
