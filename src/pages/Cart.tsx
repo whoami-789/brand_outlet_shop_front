@@ -79,6 +79,7 @@ export function Cart_page() {
                     label="Ваш TelegramID"
                     variant="outlined"
                     value={telegramFeed}
+                    className="h-2"
                     onChange={(e) => setTelegramFeed(e.target.value)}
                 />
             </div>
