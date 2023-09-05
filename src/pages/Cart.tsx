@@ -5,13 +5,6 @@ import { Button, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-interface Product {
-    id: number;
-    title: string;
-    price: number;
-    image: string;
-}
-
 interface CartItem {
     cartItemId: number;
     product: {
@@ -33,7 +26,7 @@ interface CartItem {
 }
 
 export function Cart_page() {
-    const [products, setProducts] = useState<CartItem[]>([]); // Используем интерфейс CartItem
+    const [products, setProducts] = useState<CartItem[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [telegramFeed, setTelegramFeed] = useState<string>("");
 
@@ -45,15 +38,13 @@ export function Cart_page() {
                 .get(`https://brand-outlet.shop/api/cart/view?sessionToken=${sessionToken}`)
                 .then((response) => {
                     const cartItems = response.data;
-                    setProducts(cartItems); // Обновите состояние с полученными данными корзины
+                    setProducts(cartItems);
                 })
                 .catch((error) => {
                     console.error("Ошибка при получении данных корзины:", error);
                 });
         }
     }, []);
-
-
 
     useEffect(() => {
         const calculatedTotalPrice = products.reduce((total, product) => {
@@ -74,9 +65,8 @@ export function Cart_page() {
             </Link>
             <div className="mt-2 inline-block w-full max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide overflow-hidden">
                 {products.map((cartItem) => (
-                    <Cart key={cartItem.product.id} product={cartItem.product} />
+                    <Cart key={cartItem.product.id} product={cartItem.product} productSize={cartItem.productSize} />
                 ))}
-
             </div>
             <div className="flex ml-16">
                 <p className="font-bold text-lg w-44">Общая стоимость:</p>
