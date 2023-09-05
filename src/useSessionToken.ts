@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-let sessionToken: string;
+let sessionToken: string = '';
 
 async function generateSessionToken() {
     try {
