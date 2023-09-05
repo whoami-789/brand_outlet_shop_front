@@ -9,6 +9,7 @@ async function generateSessionToken() {
         const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
         const newSessionToken = response.data.sessionToken;
         console.log(newSessionToken);
+        console.log(response)
 
         // Сохраняем токен в localStorage
         localStorage.setItem("sessionToken", newSessionToken);
