@@ -93,9 +93,10 @@ export function Product_Unlimited_Page() {
             </div>
             <div className="grid gap-2 grid-cols-2 grid-rows-2 w-fit mb-2 z-0">
                 {filteredProducts.map((product) => (
-                    <Products_Unlimited product={product} key={product.id} />
+                    <Products_Unlimited product={product} sessionToken={sessionToken} key={product.id} />
                 ))}
             </div>
+
             <div
                 className="absolute bottom-0 left-0 p-2 z-10"
                 style={{ zIndex: 10, position: "relative" }}
