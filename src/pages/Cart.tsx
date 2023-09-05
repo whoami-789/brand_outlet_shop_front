@@ -74,9 +74,10 @@ export function Cart_page() {
                 </div>
             </Link>
             <div className="mt-2 inline-block w-full max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide overflow-hidden">
-                {products.map((product) => (
-                    <Cart key={product.product.id} product={product.product} />
+                {products.map((cartItem) => (
+                    <Cart key={cartItem.product.id} product={cartItem.product} />
                 ))}
+
             </div>
             <div className="flex ml-16">
                 <p className="font-bold text-lg w-44">Общая стоимость:</p>
