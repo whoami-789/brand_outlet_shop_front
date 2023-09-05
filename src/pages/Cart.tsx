@@ -74,29 +74,32 @@ export function Cart_page() {
                     {totalPrice.toFixed(2)} ₽
                 </p>
             </div>
-            <TextField
-                label="Ваш telegramID"
-                variant="outlined"
-                value={telegramFeed}
-                onChange={(e) => setTelegramFeed(e.target.value)}
-                className="mb-3 ml-2 w-40 h-3"
-            />
-            <Button
-                sx={{
-                    mb: 3,
-                    mt: 1,
-                    ml: 10,
-                    minWidth: 220,
-                    height: 30,
-                    backgroundColor: "#949494",
-                    "&:hover": {
-                        background: "#767676",
-                    },
-                }}
-                variant="contained"
-            >
-                Оформить заказ
-            </Button>
+            <div className="mb-3 ml-2 w-44 h-2">
+                <TextField
+                    label="Ваш TelegramID"
+                    variant="outlined"
+                    value={telegramFeed}
+                    onChange={(e) => setTelegramFeed(e.target.value)}
+                />
+            </div>
+            <div>
+                <Button
+                    sx={{
+                        mb: 3,
+                        mt: 1,
+                        ml: 10,
+                        minWidth: 220,
+                        height: 30,
+                        backgroundColor: "#949494",
+                        "&:hover": {
+                            background: "#767676",
+                        },
+                    }}
+                    variant="contained"
+                >
+                    Оформить заказ
+                </Button>
+            </div>
         </div>
     );
 }
