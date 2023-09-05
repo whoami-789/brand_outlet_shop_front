@@ -9,13 +9,12 @@ import {autoPlay} from 'react-swipeable-views-utils';
 import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
-import {useSessionToken} from "../useSessionToken";
+import {sessionToken} from "../useSessionToken";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 interface ProductsProps {
-
     product: Product
 }
 
@@ -46,9 +45,6 @@ export function Products_Unlimited({product}: ProductsProps) {
 
 
     // Найти цену для выбранного размера
-    const { sessionToken } = useSessionToken(); // Используйте кастомный хук для получения токена
-
-    // Найти цену для выбранного размера
     let selectedPrice: string = "";
     if (selectedSize) {
         const selectedSizeObj: ProductSize | undefined = product.sizes.find(
@@ -62,7 +58,7 @@ export function Products_Unlimited({product}: ProductsProps) {
 
     // Функция для добавления товара в корзину
     const addToCart = () => {
-        if (selectedSize && sessionToken) { // Убедитесь, что sessionToken не пустой
+        if (selectedSize) {
             const selectedProductSize = product.sizes.find(
                 (size) => size.size === selectedSize
             );
@@ -71,8 +67,8 @@ export function Products_Unlimited({product}: ProductsProps) {
                 const requestData = {
                     productId: product.id,
                     quantity: 1,
-                    productSizeId: selectedProductSize.id,
-                    sessionToken: sessionToken, // Проверьте, что здесь используется актуальное значение
+                    productSizeId: selectedProductSize.id, // Извлекаем id размера из объекта
+                    sessionToken: sessionToken,
                 };
 
                 axios.post('https://brand-outlet.shop/api/cart/add', requestData)
@@ -86,7 +82,6 @@ export function Products_Unlimited({product}: ProductsProps) {
             }
         }
     };
-
 
     return (
         <>

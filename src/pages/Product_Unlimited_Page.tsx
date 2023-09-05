@@ -5,7 +5,7 @@ import axios from "axios";
 import {Product} from "../models";
 import {CartButton} from "../components/CartButton";
 import {Link} from "react-router-dom";
-import {useSessionToken} from "../useSessionToken";
+import {generateSessionToken} from "../useSessionToken"; // Импортируйте компонент кнопки корзины
 
 function getUniqueCategories(products: Product[]) {
     const uniqueCategories = new Set<string>();
@@ -24,7 +24,6 @@ export function Product_Unlimited_Page() {
     const [cartVisible, setCartVisible] = useState(false); // Состояние для видимости корзины
     const [dataFetched, setDataFetched] = useState(false);
     const [sessionToken, setSessionToken] = useState(""); // Состояние для хранения токена сессии
-    const { generateSessionToken } = useSessionToken();
 
 
     useEffect(() => {
@@ -94,11 +93,11 @@ export function Product_Unlimited_Page() {
             <div className="grid gap-2 grid-cols-2 grid-rows-2 w-fit mb-2 z-0">
                 {filteredProducts.map(product => <Products_Unlimited product={product} key={product.id}/>)}
             </div>
-                <div className="absolute bottom-0 left-0 p-2 z-10" style={{zIndex: 10, position: 'relative'}}>
-                    <Link to="/cart">
-                        <CartButton onClick={() => setCartVisible(!cartVisible)}/>
-                    </Link>
-                </div>
+            <div className="absolute bottom-0 left-0 p-2 z-10" style={{zIndex: 10, position: 'relative'}}>
+                <Link to="/cart">
+                    <CartButton onClick={() => setCartVisible(!cartVisible)}/>
+                </Link>
+            </div>
         </div>
     )
 }
