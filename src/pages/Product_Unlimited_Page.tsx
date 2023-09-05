@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useProducts } from "../hooks/products";
-import { Products_Unlimited } from "../components/Product_unlimited";
+import React, {useEffect, useState} from "react";
+import {useProducts} from "../hooks/products";
+import {Products_Unlimited} from "../components/Product_unlimited";
 import axios from "axios";
-import { Product } from "../models";
-import { CartButton } from "../components/CartButton";
-import { Link } from "react-router-dom";
+import {Product} from "../models";
+import {CartButton} from "../components/CartButton";
+import {Link} from "react-router-dom";
+import {generateSessionToken} from "../useSessionToken";
 
 function getUniqueCategories(products: Product[]) {
     const uniqueCategories = new Set<string>();
@@ -15,28 +16,22 @@ function getUniqueCategories(products: Product[]) {
 }
 
 export function Product_Unlimited_Page() {
-    const { products } = useProducts();
+    const {products} = useProducts();
     const [categories, setCategories] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const [cartVisible, setCartVisible] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState<string>('');
+    const [cartVisible, setCartVisible] = useState(false); // Состояние для видимости корзины
     const [dataFetched, setDataFetched] = useState(false);
     const [sessionToken, setSessionToken] = useState(""); // Состояние для хранения токена сессии
 
-    useEffect(() => {
-        // Вызываем функцию для генерации токена при монтировании компонента
-        generateSessionToken();
-    }, []); // Пустой массив завершает вызов useEffect только при монтировании компонента
 
     useEffect(() => {
         const fetchData = async () => {
             if (dataFetched || !hasMore || loading) return;
             setLoading(true);
             try {
-                const response = await axios.get<Product[]>(
-                    "https://brand-outlet.shop/api/products/"
-                );
+                const response = await axios.get<Product[]>(`https://brand-outlet.shop/api/products/`);
                 if (response.data.length === 0) {
                     setHasMore(false);
                 } else {
@@ -46,7 +41,7 @@ export function Product_Unlimited_Page() {
                     setDataFetched(true); // Устанавливаем флаг, что данные были загружены
                 }
             } catch (error) {
-                console.error("Ошибка при получении данных о продуктах:", error);
+                console.error('Ошибка при получении данных о продуктах:', error);
             }
             setLoading(false);
         };
@@ -54,32 +49,36 @@ export function Product_Unlimited_Page() {
         fetchData();
     }, [loading, hasMore, dataFetched]);
 
-    const generateSessionToken = async () => {
-        try {
-            console.log("Запрос на генерацию токена сессии отправлен");
-            const response = await axios.post<{ sessionToken: string }>(
-                "https://brand-outlet.shop/api/order/create-session"
-            );
-            const newSessionToken = response.data.sessionToken;
-            console.log("Сессионный токен получен:", newSessionToken);
-
-            // Сохраняем токен в состояние
-            setSessionToken(newSessionToken);
-        } catch (error) {
-            console.error("Ошибка при генерации токена сессии:", error);
+    useEffect(() => {
+        if (!sessionToken) {
+            generateSessionToken(); // Вызываем функцию только если токен еще не сохранен
         }
-    };
+    }, [sessionToken]);
 
     const filteredProducts = selectedCategory
-        ? products.filter((product) => product.categoryName === selectedCategory)
+        ? products.filter(product => product.categoryName === selectedCategory)
         : products;
 
     const handleCategoryClick = (category: string) => {
         setSelectedCategory(category);
     };
 
+
     return (
         <div className="relative bg-gray-300 w-full h-full">
+            {/*<div className="mb-3 ml-16">*/}
+            {/*    <TextField*/}
+            {/*        id="input-with-icon-textfield"*/}
+            {/*        InputProps={{*/}
+            {/*            startAdornment: (*/}
+            {/*                <InputAdornment position="start">*/}
+            {/*                    <SearchIcon/>*/}
+            {/*                </InputAdornment>*/}
+            {/*            ),*/}
+            {/*        }}*/}
+            {/*        variant="standard"*/}
+            {/*    />*/}
+            {/*</div>*/}
             <div className="flex overflow-x-scroll whitespace-nowrap">
                 {categories.map((category, index) => (
                     <div
@@ -92,19 +91,13 @@ export function Product_Unlimited_Page() {
                 ))}
             </div>
             <div className="grid gap-2 grid-cols-2 grid-rows-2 w-fit mb-2 z-0">
-                {filteredProducts.map((product) => (
-                    <Products_Unlimited product={product} sessionToken={sessionToken} key={product.id} />
-                ))}
+                {filteredProducts.map(product => <Products_Unlimited product={product} key={product.id}/>)}
             </div>
-
-            <div
-                className="absolute bottom-0 left-0 p-2 z-10"
-                style={{ zIndex: 10, position: "relative" }}
-            >
+            <div className="absolute bottom-0 left-0 p-2 z-10" style={{zIndex: 10, position: 'relative'}}>
                 <Link to="/cart">
-                    <CartButton onClick={() => setCartVisible(!cartVisible)} />
+                    <CartButton onClick={() => setCartVisible(!cartVisible)}/>
                 </Link>
             </div>
         </div>
-    );
+    )
 }
