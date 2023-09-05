@@ -74,15 +74,15 @@ export function Cart_page() {
                     {totalPrice.toFixed(2)} ₽
                 </p>
             </div>
-            <div className="mb-3 ml-2 w-44 h-2">
+            <div className="mb-6 ml-12 w-44" style={{ height: '2rem' }}>
                 <TextField
                     label="Ваш TelegramID"
                     variant="outlined"
                     value={telegramFeed}
-                    className="h-2"
                     onChange={(e) => setTelegramFeed(e.target.value)}
                 />
             </div>
+
             <div>
                 <Button
                     sx={{
