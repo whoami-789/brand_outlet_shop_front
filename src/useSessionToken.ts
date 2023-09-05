@@ -2,20 +2,31 @@
 
 import axios from "axios";
 
-let sessionToken: string = '';
+let sessionToken: string | null = null;
 
 async function generateSessionToken() {
     try {
         const response = await axios.post<{ sessionToken: string }>('https://brand-outlet.shop/api/order/create-session');
-        sessionToken = response.data.sessionToken;
-        console.log(sessionToken);
+        const newSessionToken = response.data.sessionToken;
+        console.log(newSessionToken);
 
-        // Возвращаем сгенерированный токен
-        return sessionToken;
+        // Сохраняем токен в localStorage
+        localStorage.setItem("sessionToken", newSessionToken);
+
+        // Присваиваем его переменной sessionToken
+        sessionToken = newSessionToken;
+
+        return newSessionToken;
     } catch (error) {
         console.error('Ошибка при генерации токена сессии:', error);
-        throw error; // Если нужно обработать ошибку в другом месте
+        throw error;
     }
+}
+
+// При инициализации, попытайтесь восстановить токен из localStorage
+const storedSessionToken = localStorage.getItem("sessionToken");
+if (storedSessionToken) {
+    sessionToken = storedSessionToken;
 }
 
 export { sessionToken, generateSessionToken };
