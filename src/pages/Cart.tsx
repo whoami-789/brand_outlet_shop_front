@@ -12,7 +12,7 @@ interface CartItem {
         title: string;
         img1: string;
         img2: string;
-        sizes: any[]; // Здесь нужно определить структуру данных для sizes, если это массив
+        sizes: any[];
         categoryName: string | null;
     };
     productSize: {
@@ -29,6 +29,33 @@ export function Cart_page() {
     const [products, setProducts] = useState<CartItem[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [telegramFeed, setTelegramFeed] = useState<string>("");
+
+    // Здесь сохраняем данные Telegram ID
+    const handleTelegramIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTelegramFeed(e.target.value);
+    };
+
+    // Здесь отправляем запрос на оформление заказа
+    const handleCheckout = () => {
+        const sessionToken = localStorage.getItem("sessionToken");
+
+        if (sessionToken) {
+            axios
+                .post("https://brand-outlet.shop/api/checkout", {
+                    sessionId: sessionToken,
+                    telegramId: telegramFeed,
+                })
+                .then((response) => {
+                    // Обработка успешного оформления заказа
+                    const updatedOrderId = response.data;
+                    console.log(`Заказ успешно оформлен. Новый orderId: ${updatedOrderId}`);
+                })
+                .catch((error) => {
+                    // Обработка ошибки при оформлении заказа
+                    console.error("Ошибка при оформлении заказа:", error);
+                });
+        }
+    };
 
     useEffect(() => {
         const sessionToken = localStorage.getItem("sessionToken");
@@ -49,7 +76,6 @@ export function Cart_page() {
     useEffect(() => {
         // Пересчитываем общую стоимость на основе данных в products
         const calculatedTotalPrice = products.reduce((total, cartItem) => {
-            // Умножаем цену товара на его количество и добавляем к общей стоимости
             return total + cartItem.productSize.priceRub * cartItem.quantity;
         }, 0);
 
@@ -87,9 +113,8 @@ export function Cart_page() {
                         key={cartItem.product.id}
                         product={cartItem.product}
                         productSize={cartItem.productSize}
-                        quantity={cartItem.quantity} // Передаем количество товара
+                        quantity={cartItem.quantity}
                         updateQuantity={(newQuantity) => {
-                            // Функция для обновления количества товара в текущем компоненте
                             updateCartItemQuantity(cartItem.cartItemId, newQuantity);
                         }}
                     />
@@ -106,8 +131,8 @@ export function Cart_page() {
                     label="Ваш TelegramID"
                     variant="outlined"
                     value={telegramFeed}
-                    onChange={(e) => setTelegramFeed(e.target.value)}
-                    size="small" // Здесь устанавливаем размер "small" для уменьшения высоты
+                    onChange={handleTelegramIdChange}
+                    size="small"
                 />
             </div>
 
@@ -125,6 +150,7 @@ export function Cart_page() {
                         },
                     }}
                     variant="contained"
+                    onClick={handleCheckout} // Здесь вызываем функцию оформления заказа
                 >
                     Оформить заказ
                 </Button>
