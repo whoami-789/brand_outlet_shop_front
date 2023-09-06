@@ -357,28 +357,29 @@ function AdminPanel() {
                     </tr>
                     </thead>
                     <tbody>
-                    {selectedOrder && (
-                        <tr className="bg-white">
+                    {orders.map((order) => (
+                        <tr key={order.orderNumber} className="bg-white">
                             <td className="border border-gray-400 px-4 py-2">
-                                {selectedOrder.orderNumber}
+                                {order.orderNumber}
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                                {selectedOrder.telegramId}
+                                {order.telegramId}
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                                {selectedOrder.cart.productTitle}
+                                {order.cart.productTitle}
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                                {selectedOrder.cart.productSize}
+                                {order.cart.productSize}
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                                {selectedOrder.cart.quantity}
+                                {order.cart.quantity}
                             </td>
                         </tr>
-                    )}
+                    ))}
                     </tbody>
                 </table>
             </div>
+
 
         </div>
     );
