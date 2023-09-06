@@ -7,56 +7,61 @@ interface CartProps {
         id: number;
         title: string;
         img1: string;
-        img2: string;
-        sizes: any[]; // Здесь нужно определить структуру данных для sizes, если это массив
-        categoryName: string | null;
     };
     productSize: {
         id: number;
         size: string;
         priceRub: number;
-        priceYuan: number;
-        deliveryPrice: number;
     };
+    updateTotalPrice: (newTotalPrice: number) => void;
 }
 
-export function Cart({ product, productSize }: CartProps) {
+export function Cart({ product, productSize, updateTotalPrice }: CartProps) {
     const [quantity, setQuantity] = useState(1);
 
     const sessionToken = localStorage.getItem("sessionToken");
 
     const decreaseQuantity = () => {
         // Отправить запрос на сервер для уменьшения количества товара
-        axios.post("https://brand-outlet.shop/api/cart/decrease", {
-            sessionId: sessionToken,
-            size: productSize.id,
-        })
+        axios
+            .post("https://brand-outlet.shop/api/cart/decrease", {
+                sessionId: sessionToken,
+                size: productSize.id,
+            })
             .then((response) => {
-                if (quantity > 1) {
+                if (response.data.success) {
+                    // Обновляем состояние количества товара в компоненте и totalPrice
                     setQuantity(quantity - 1);
+                    updateTotalPrice(response.data.totalPrice);
+                } else {
+                    console.error("Ошибка при уменьшении количества товара:", response.data.error);
                 }
             })
             .catch((error) => {
-                // Обработка ошибки
                 console.error("Ошибка при уменьшении количества товара:", error);
             });
     };
 
     const increaseQuantity = () => {
         // Отправить запрос на сервер для увеличения количества товара
-        axios.post("https://brand-outlet.shop/api/cart/increase", {
-            sessionId: sessionToken,
-            size: productSize.id,
-        })
+        axios
+            .post("https://brand-outlet.shop/api/cart/increase", {
+                sessionId: sessionToken,
+                size: productSize.id,
+            })
             .then((response) => {
-                setQuantity(quantity + 1);
+                if (response.data.success) {
+                    // Обновляем состояние количества товара в компоненте и totalPrice
+                    setQuantity(quantity + 1);
+                    updateTotalPrice(response.data.totalPrice);
+                } else {
+                    console.error("Ошибка при увеличении количества товара:", response.data.error);
+                }
             })
             .catch((error) => {
-                // Обработка ошибки
                 console.error("Ошибка при увеличении количества товара:", error);
             });
     };
-
 
     return (
         <>
@@ -74,7 +79,7 @@ export function Cart({ product, productSize }: CartProps) {
                                 width: 150,
                                 height: 90,
                                 marginLeft: 3,
-                                position: 'relative', // Добавлено для позиционирования
+                                position: 'relative',
                             }}
                         >
                             <img
@@ -137,5 +142,5 @@ export function Cart({ product, productSize }: CartProps) {
                 </Box>
             </div>
         </>
-    )
+    );
 }

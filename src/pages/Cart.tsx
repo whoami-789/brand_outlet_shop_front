@@ -5,22 +5,20 @@ import { Button, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
+interface Product {
+    id: number;
+    title: string;
+    img1: string;
+    img2: string;
+}
+
 interface CartItem {
     cartItemId: number;
-    product: {
-        id: number;
-        title: string;
-        img1: string;
-        img2: string;
-        sizes: any[]; // Здесь нужно определить структуру данных для sizes, если это массив
-        categoryName: string | null;
-    };
+    product: Product;
     productSize: {
         id: number;
         size: string;
         priceRub: number;
-        priceYuan: number;
-        deliveryPrice: number;
     };
     quantity: number;
 }
@@ -48,10 +46,14 @@ export function Cart_page() {
 
     useEffect(() => {
         const calculatedTotalPrice = products.reduce((total, product) => {
-            return total + product.productSize.priceRub;
+            return total + product.productSize.priceRub * product.quantity;
         }, 0);
         setTotalPrice(calculatedTotalPrice);
     }, [products]);
+
+    const handleTotalPriceUpdate = (newTotalPrice: number) => {
+        setTotalPrice(newTotalPrice);
+    };
 
     return (
         <div className="bg-gray-300 w-full mr-2">
@@ -65,7 +67,12 @@ export function Cart_page() {
             </Link>
             <div className="mt-2 inline-block w-full max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide overflow-hidden">
                 {products.map((cartItem) => (
-                    <Cart key={cartItem.product.id} product={cartItem.product} productSize={cartItem.productSize} />
+                    <Cart
+                        key={cartItem.cartItemId}
+                        product={cartItem.product}
+                        productSize={cartItem.productSize}
+                        updateTotalPrice={handleTotalPriceUpdate}
+                    />
                 ))}
             </div>
             <div className="flex ml-16">
@@ -80,7 +87,7 @@ export function Cart_page() {
                     variant="outlined"
                     value={telegramFeed}
                     onChange={(e) => setTelegramFeed(e.target.value)}
-                    size="small" // Здесь устанавливаем размер "small" для уменьшения высоты
+                    size="small"
                 />
             </div>
 
