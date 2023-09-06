@@ -29,7 +29,7 @@ export function Cart_page() {
     const [products, setProducts] = useState<CartItem[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [telegramFeed, setTelegramFeed] = useState<string>("");
-    const [orderPlaced, setOrderPlaced] = useState<boolean>(false); // Добавлено состояние
+    const [orderPlaced, setOrderPlaced] = useState<boolean>(false); // Состояние для отслеживания оформления заказа
 
     // Здесь сохраняем данные Telegram ID
     const handleTelegramIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,8 +50,7 @@ export function Cart_page() {
                     // Обработка успешного оформления заказа
                     const updatedOrderId = response.data;
                     console.log(`Заказ успешно оформлен. Новый orderId: ${updatedOrderId}`);
-                    // Устанавливаем состояние "Заказ оформлен"
-                    setOrderPlaced(true);
+                    setOrderPlaced(true); // Устанавливаем состояние, что заказ оформлен
                 })
                 .catch((error) => {
                     // Обработка ошибки при оформлении заказа
@@ -111,17 +110,19 @@ export function Cart_page() {
                 </div>
             </Link>
             <div className="mt-2 inline-block w-full max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide overflow-hidden">
-                {products.map((cartItem) => (
-                    <Cart
-                        key={cartItem.product.id}
-                        product={cartItem.product}
-                        productSize={cartItem.productSize}
-                        quantity={cartItem.quantity}
-                        updateQuantity={(newQuantity) => {
-                            updateCartItemQuantity(cartItem.cartItemId, newQuantity);
-                        }}
-                    />
-                ))}
+                {orderPlaced ? null : ( // Если заказ оформлен, скрываем этот блок
+                    products.map((cartItem) => (
+                        <Cart
+                            key={cartItem.product.id}
+                            product={cartItem.product}
+                            productSize={cartItem.productSize}
+                            quantity={cartItem.quantity}
+                            updateQuantity={(newQuantity) => {
+                                updateCartItemQuantity(cartItem.cartItemId, newQuantity);
+                            }}
+                        />
+                    ))
+                )}
             </div>
             <div className="flex ml-16">
                 <p className="font-bold text-lg w-44">Общая стоимость:</p>
@@ -141,20 +142,12 @@ export function Cart_page() {
 
             <div>
                 {orderPlaced ? ( // Отображаем благодарность после оформления заказа
-                    <p>Спасибо за заказ</p>
+                    <p className="thank-you-text text-green-500 font-bold text-xl mt-4">
+                        Спасибо за заказ
+                    </p>
                 ) : (
                     <Button
-                        sx={{
-                            mb: 3,
-                            mt: 1,
-                            ml: 10,
-                            minWidth: 220,
-                            height: 30,
-                            backgroundColor: "#949494",
-                            "&:hover": {
-                                background: "#767676",
-                            },
-                        }}
+                        className="mb-3 mt-1 ml-10 min-w-[220px] h-30 bg-gray-600 hover:bg-gray-700 text-white"
                         variant="contained"
                         onClick={handleCheckout} // Здесь вызываем функцию оформления заказа
                     >
