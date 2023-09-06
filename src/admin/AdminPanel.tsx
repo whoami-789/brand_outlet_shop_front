@@ -366,13 +366,25 @@ function AdminPanel() {
                                 {order.telegramId}
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                                {order.cart.productTitle}
+                                {order.cart.map((item, index) => (
+                                    <div key={index}>
+                                        {item.productTitle}
+                                    </div>
+                                ))}
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                                {order.cart.productSize}
+                                {order.cart.map((item, index) => (
+                                    <div key={index}>
+                                        {item.productSize}
+                                    </div>
+                                ))}
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                                {order.cart.quantity}
+                                {order.cart.map((item, index) => (
+                                    <div key={index}>
+                                        {item.quantity}
+                                    </div>
+                                ))}
                             </td>
                         </tr>
                     ))}
