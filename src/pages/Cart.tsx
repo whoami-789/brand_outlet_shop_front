@@ -41,7 +41,7 @@ export function Cart_page() {
 
         if (sessionToken) {
             axios
-                .post("https://brand-outlet.shop/api/checkout", {
+                .post("https://brand-outlet.shop/api/order/checkout", {
                     sessionId: sessionToken,
                     telegramId: telegramFeed,
                 })
