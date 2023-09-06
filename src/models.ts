@@ -15,6 +15,16 @@ export interface ProductSize {
     deliveryPrice: number;
 }
 
+export interface Order {
+    id: number;
+    telegramId: string;
+    sessionId: string;
+    cart: {
+        productTitle: string;
+        quantity: number;
+        productSize: string;
+    };
+}
 export interface ProductCreate {
     id: number;
     title: string;
