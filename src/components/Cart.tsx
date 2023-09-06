@@ -29,7 +29,7 @@ export function Cart({ product, productSize }: CartProps) {
         // Отправить запрос на сервер для уменьшения количества товара
         axios.post("https://brand-outlet.shop/api/cart/decrease", {
             sessionId: sessionToken,
-            size: productSize.size,
+            size: productSize.id,
         })
             .then((response) => {
                 if (quantity > 1) {
@@ -46,7 +46,7 @@ export function Cart({ product, productSize }: CartProps) {
         // Отправить запрос на сервер для увеличения количества товара
         axios.post("https://brand-outlet.shop/api/cart/increase", {
             sessionId: sessionToken,
-            size: productSize.size,
+            size: productSize.id,
         })
             .then((response) => {
                 setQuantity(quantity + 1);
