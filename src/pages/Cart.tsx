@@ -5,20 +5,22 @@ import { Button, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-interface Product {
-    id: number;
-    title: string;
-    img1: string;
-    img2: string;
-}
-
 interface CartItem {
     cartItemId: number;
-    product: Product;
+    product: {
+        id: number;
+        title: string;
+        img1: string;
+        img2: string;
+        sizes: any[]; // Здесь нужно определить структуру данных для sizes, если это массив
+        categoryName: string | null;
+    };
     productSize: {
         id: number;
         size: string;
         priceRub: number;
+        priceYuan: number;
+        deliveryPrice: number;
     };
     quantity: number;
 }
@@ -46,14 +48,10 @@ export function Cart_page() {
 
     useEffect(() => {
         const calculatedTotalPrice = products.reduce((total, product) => {
-            return total + product.productSize.priceRub * product.quantity;
+            return total + product.productSize.priceRub;
         }, 0);
         setTotalPrice(calculatedTotalPrice);
     }, [products]);
-
-    const handleTotalPriceUpdate = (newTotalPrice: number) => {
-        setTotalPrice(newTotalPrice);
-    };
 
     return (
         <div className="bg-gray-300 w-full mr-2">
@@ -68,10 +66,23 @@ export function Cart_page() {
             <div className="mt-2 inline-block w-full max-h-[calc(100vh-100px)] overflow-y-auto scrollbar-hide overflow-hidden">
                 {products.map((cartItem) => (
                     <Cart
-                        key={cartItem.cartItemId}
+                        key={cartItem.product.id}
                         product={cartItem.product}
                         productSize={cartItem.productSize}
-                        updateTotalPrice={handleTotalPriceUpdate}
+                        quantity={cartItem.quantity} // Передаем количество товара
+                        updateQuantity={(newQuantity) => {
+                            // Функция для обновления количества товара в текущем компоненте
+                            const updatedProducts = products.map((item) => {
+                                if (item.product.id === cartItem.product.id) {
+                                    return {
+                                        ...item,
+                                        quantity: newQuantity,
+                                    };
+                                }
+                                return item;
+                            });
+                            setProducts(updatedProducts);
+                        }}
                     />
                 ))}
             </div>
@@ -87,7 +98,7 @@ export function Cart_page() {
                     variant="outlined"
                     value={telegramFeed}
                     onChange={(e) => setTelegramFeed(e.target.value)}
-                    size="small"
+                    size="small" // Здесь устанавливаем размер "small" для уменьшения высоты
                 />
             </div>
 
