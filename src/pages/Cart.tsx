@@ -47,11 +47,29 @@ export function Cart_page() {
     }, []);
 
     useEffect(() => {
-        const calculatedTotalPrice = products.reduce((total, product) => {
-            return total + product.productSize.priceRub;
+        // Пересчитываем общую стоимость на основе данных в products
+        const calculatedTotalPrice = products.reduce((total, cartItem) => {
+            // Умножаем цену товара на его количество и добавляем к общей стоимости
+            return total + cartItem.productSize.priceRub * cartItem.quantity;
         }, 0);
+
         setTotalPrice(calculatedTotalPrice);
     }, [products]);
+
+    // Функция для обновления количества товара в products
+    const updateCartItemQuantity = (cartItemId: number, newQuantity: number) => {
+        const updatedProducts = products.map((cartItem) => {
+            if (cartItem.cartItemId === cartItemId) {
+                return {
+                    ...cartItem,
+                    quantity: newQuantity,
+                };
+            }
+            return cartItem;
+        });
+
+        setProducts(updatedProducts);
+    };
 
     return (
         <div className="bg-gray-300 w-full mr-2">
@@ -72,16 +90,7 @@ export function Cart_page() {
                         quantity={cartItem.quantity} // Передаем количество товара
                         updateQuantity={(newQuantity) => {
                             // Функция для обновления количества товара в текущем компоненте
-                            const updatedProducts = products.map((item) => {
-                                if (item.product.id === cartItem.product.id) {
-                                    return {
-                                        ...item,
-                                        quantity: newQuantity,
-                                    };
-                                }
-                                return item;
-                            });
-                            setProducts(updatedProducts);
+                            updateCartItemQuantity(cartItem.cartItemId, newQuantity);
                         }}
                     />
                 ))}
