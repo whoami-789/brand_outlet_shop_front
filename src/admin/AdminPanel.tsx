@@ -350,61 +350,36 @@ function AdminPanel() {
                     <thead>
                     <tr className="bg-gray-200">
                         <th className="border border-gray-400 px-4 py-2">Номер заказа</th>
-                        <th className="border border-gray-400 px-4 py-2">Действия</th>
+                        <th className="border border-gray-400 px-4 py-2">Телеграм ID</th>
+                        <th className="border border-gray-400 px-4 py-2">Название</th>
+                        <th className="border border-gray-400 px-4 py-2">Размер</th>
+                        <th className="border border-gray-400 px-4 py-2">Количество</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {orders.map((order) => (
-                        <tr key={order.id} className="bg-white">
+                    {selectedOrder && (
+                        <tr className="bg-white">
                             <td className="border border-gray-400 px-4 py-2">
-                                {order.id}
+                                {selectedOrder.orderNumber}
                             </td>
                             <td className="border border-gray-400 px-4 py-2">
-                                <button
-                                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-2 rounded mr-2"
-                                    onClick={() => handleSelectOrder(order)}
-                                >
-                                    Подробности
-                                </button>
+                                {selectedOrder.telegramId}
+                            </td>
+                            <td className="border border-gray-400 px-4 py-2">
+                                {selectedOrder.cart.productTitle}
+                            </td>
+                            <td className="border border-gray-400 px-4 py-2">
+                                {selectedOrder.cart.productSize}
+                            </td>
+                            <td className="border border-gray-400 px-4 py-2">
+                                {selectedOrder.cart.quantity}
                             </td>
                         </tr>
-                    ))}
+                    )}
                     </tbody>
                 </table>
             </div>
 
-            {selectedOrder && (
-                <div>
-                    <h2 className="text-2xl font-semibold mb-4">Подробности заказа</h2>
-                    {/* Отображение подробностей выбранного заказа */}
-                    <div>
-                        <p>Номер заказа: {selectedOrder.id}</p>
-                        <p>Телеграм ID: {selectedOrder.telegramId}</p>
-                        <h3>Список товаров в заказе:</h3>
-                        <table className="table-auto w-full border-collapse border border-gray-400">
-                            <thead>
-                            <tr className="bg-gray-200">
-                                <th className="border border-gray-400 px-4 py-2">Название</th>
-                                <th className="border border-gray-400 px-4 py-2">Размер</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr className="bg-white">
-                                    <td className="border border-gray-400 px-4 py-2">
-                                        {selectedOrder.cart.productTitle}
-                                    </td>
-                                    <td className="border border-gray-400 px-4 py-2">
-                                        {selectedOrder.cart.productSize}
-                                    </td>
-                                    <td className="border border-gray-400 px-4 py-2">
-                                        {selectedOrder.cart.quantity}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

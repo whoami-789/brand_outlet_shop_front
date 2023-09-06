@@ -16,7 +16,7 @@ export interface ProductSize {
 }
 
 export interface Order {
-    id: number;
+    orderNumber: number;
     telegramId: string;
     sessionId: string;
     cart: {
