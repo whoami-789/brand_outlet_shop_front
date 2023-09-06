@@ -23,7 +23,7 @@ export interface Order {
         productTitle: string;
         quantity: number;
         productSize: string;
-    };
+    }[];
 }
 export interface ProductCreate {
     id: number;

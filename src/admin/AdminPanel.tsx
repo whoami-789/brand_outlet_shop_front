@@ -351,7 +351,7 @@ function AdminPanel() {
                     <tr className="bg-gray-200">
                         <th className="border border-gray-400 px-4 py-2">Номер заказа</th>
                         <th className="border border-gray-400 px-4 py-2">Телеграм ID</th>
-                        <th className="border border-gray-400 px-4 py-2">Название</th>
+                        <th className="border border-gray-400 px-4 py-2">Товар</th>
                         <th className="border border-gray-400 px-4 py-2">Размер</th>
                         <th className="border border-gray-400 px-4 py-2">Количество</th>
                     </tr>
