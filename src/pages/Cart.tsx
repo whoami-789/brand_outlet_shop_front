@@ -29,6 +29,7 @@ export function Cart_page() {
     const [products, setProducts] = useState<CartItem[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [telegramFeed, setTelegramFeed] = useState<string>("");
+    const [orderPlaced, setOrderPlaced] = useState<boolean>(false); // Добавлено состояние
 
     // Здесь сохраняем данные Telegram ID
     const handleTelegramIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +50,8 @@ export function Cart_page() {
                     // Обработка успешного оформления заказа
                     const updatedOrderId = response.data;
                     console.log(`Заказ успешно оформлен. Новый orderId: ${updatedOrderId}`);
+                    // Устанавливаем состояние "Заказ оформлен"
+                    setOrderPlaced(true);
                 })
                 .catch((error) => {
                     // Обработка ошибки при оформлении заказа
@@ -137,23 +140,27 @@ export function Cart_page() {
             </div>
 
             <div>
-                <Button
-                    sx={{
-                        mb: 3,
-                        mt: 1,
-                        ml: 10,
-                        minWidth: 220,
-                        height: 30,
-                        backgroundColor: "#949494",
-                        "&:hover": {
-                            background: "#767676",
-                        },
-                    }}
-                    variant="contained"
-                    onClick={handleCheckout} // Здесь вызываем функцию оформления заказа
-                >
-                    Оформить заказ
-                </Button>
+                {orderPlaced ? ( // Отображаем благодарность после оформления заказа
+                    <p>Спасибо за заказ</p>
+                ) : (
+                    <Button
+                        sx={{
+                            mb: 3,
+                            mt: 1,
+                            ml: 10,
+                            minWidth: 220,
+                            height: 30,
+                            backgroundColor: "#949494",
+                            "&:hover": {
+                                background: "#767676",
+                            },
+                        }}
+                        variant="contained"
+                        onClick={handleCheckout} // Здесь вызываем функцию оформления заказа
+                    >
+                        Оформить заказ
+                    </Button>
+                )}
             </div>
         </div>
     );
