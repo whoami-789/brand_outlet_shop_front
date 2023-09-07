@@ -95,16 +95,10 @@ export function Product_Unlimited_Page() {
             <div className="grid gap-2 grid-cols-2 grid-rows-2 w-fit mb-2 z-0">
                 {filteredProducts.map(product => <Products_Unlimited product={product} key={product.id}/>)}
             </div>
-            <div className="absolute bottom-0 left-0 p-2 z-10" style={{zIndex: 10, position: 'relative'}}>
+            <div className="absolute bottom-0 left-0 p-2 z-10" style={{ zIndex: 10, position: 'relative' }}>
                 <Link to="/cart">
-                    <CartButton onClick={() => setCartVisible(!cartVisible)} />
+                    <CartButton onClick={() => setCartVisible(!cartVisible)} cartItemCount={cartItemCount} /> {/* Передайте количество товаров в корзине */}
                 </Link>
-                {/* Отображение количества товаров в корзине */}
-                {cartItemCount > 0 && (
-                    <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center absolute -top-2 -right-2">
-                        {cartItemCount}
-                    </div>
-                )}
             </div>
         </div>
     )
