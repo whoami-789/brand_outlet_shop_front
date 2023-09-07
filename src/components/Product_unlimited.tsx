@@ -183,19 +183,16 @@ export function Products_Unlimited({product}: ProductsProps) {
                     </div>
                     <div className="ml-4 z-1">
                         <div className="ml-2 mt-0 self-center w-full relative z-10">
-                            <button
-                                onClick={addToCart}
-                                className={`bg-black text-white px-4 py-2 rounded-full transition-transform transform hover:bg-gray-600 hover:scale-105 ${
-                                    isAddedToCart ? "opacity-0 pointer-events-none" : "opacity-100"
-                                }`}
-                            >
-                                {isAddedToCart ? "В корзине" : "В корзину"}
-                            </button>
-                            {isAddedToCart && (
-                                <button
-                                    className="bg-black text-white px-4 py-2 rounded-full absolute inset-0 opacity-0 hover:opacity-100 transition-opacity"
-                                >
+                            {isAddedToCart ? (
+                                <button className="bg-black text-white px-4 py-2 rounded-full absolute inset-0 opacity-0 hover:opacity-100 transition-opacity">
                                     В КОРЗИНЕ
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={addToCart}
+                                    className="bg-black text-white px-4 py-2 rounded-full transition-transform transform hover:bg-gray-600 hover:scale-105"
+                                >
+                                    В корзину
                                 </button>
                             )}
                         </div>
