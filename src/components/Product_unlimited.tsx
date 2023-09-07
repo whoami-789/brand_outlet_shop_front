@@ -203,18 +203,22 @@ export function Products_Unlimited({product}: ProductsProps) {
                         )}
                     </div>
                     <div className="ml-4 z-1">
-                        <div className="ml-2 mt-0 self-center w-full relative z-10">
+                        <div className="ml-2 self-center w-full relative z-10">
                             <AnimatedButtonComponent
                                 onClick={addToCart}
                                 isAddedToCart={isAddedToCart}
                                 variant="contained"
+                                sx={{
+                                    mt: 1,
+                                    mb: 2,
+                                }}
                             >
                                 {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
                                 {isAddedToCart && (
                                     <>
-                                        <div className="bubble" style={{ left: "20px", top: "20px" }}></div>
-                                        <div className="bubble" style={{ left: "40px", top: "10px" }}></div>
-                                        <div className="bubble" style={{ left: "60px", top: "20px" }}></div>
+                                        <div className="bubble" style={{left: "20px", top: "20px"}}></div>
+                                        <div className="bubble" style={{left: "40px", top: "10px"}}></div>
+                                        <div className="bubble" style={{left: "60px", top: "20px"}}></div>
                                     </>
                                 )}
                                 <div className="bubbles"></div>
