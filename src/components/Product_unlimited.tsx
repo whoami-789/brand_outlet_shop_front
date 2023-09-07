@@ -200,7 +200,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                         </div>
                     </div>
                     {cartItemCount > 0 && (
-                        <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center absolute -top-2 -right-2">
+                        <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center relative -top-2 -right-2">
                             {cartItemCount}
                         </div>
                     )}
