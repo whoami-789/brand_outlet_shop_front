@@ -199,7 +199,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                                 }}
                                 variant="contained"
                             >
-                                {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
+                                {isAddedToCart ? "В корзину" : "В КОРЗИНЕ"}
                             </Button>
                         </div>
                     </div>
