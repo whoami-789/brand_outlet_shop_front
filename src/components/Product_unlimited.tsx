@@ -152,6 +152,9 @@ export function Products_Unlimited({product}: ProductsProps) {
                                     "& .MuiInputLabel-root": {
                                         color: 'white', // Цвет метки
                                     },
+                                    "& .MuiMenu-paper": {
+                                        maxHeight: '150px', // Задайте максимальную высоту меню
+                                    },
                                 }}
                             >
                                 <MenuItem value="">
