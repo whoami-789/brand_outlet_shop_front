@@ -184,7 +184,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                     <div className="ml-4 z-1">
                         <div className="ml-2 mt-0 self-center w-full relative z-10">
                             <Button
-                                onClick={handleAddToCart}
+                                onClick={addToCart}
                                 sx={{
                                     mt: 1,
                                     mb: 2,
