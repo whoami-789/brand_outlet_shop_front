@@ -8,16 +8,18 @@ interface CartButtonProps {
 
 export function CartButton({ onClick, cartItemCount }: CartButtonProps) {
     return (
-        <button
-            className="bottom-4 right-4 rounded-full bg-white p-2 relative"
-            onClick={onClick}
-        >
-            <ShoppingCartIcon />
+        <div className="relative">
+            <button
+                className="fixed bottom-4 right-4 rounded-full bg-white p-2"
+                onClick={onClick}
+            >
+                <ShoppingCartIcon />
+            </button>
             {cartItemCount > 0 && (
-                <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center absolute -top-6 -right-6">
+                <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center absolute -top-2 -right-2">
                     {cartItemCount}
                 </div>
             )}
-        </button>
+        </div>
     );
 }
