@@ -10,6 +10,7 @@ import SwipeableViews from 'react-swipeable-views';
 import {Product, ProductSize} from "../models";
 import axios from "axios";
 import {sessionToken} from "../useSessionToken";
+import AnimatedButtonComponent from "./AnimatedButtonComponent";
 
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -203,34 +204,21 @@ export function Products_Unlimited({product}: ProductsProps) {
                     </div>
                     <div className="ml-4 z-1">
                         <div className="ml-2 mt-0 self-center w-full relative z-10">
-                            <Button
+                            <AnimatedButtonComponent
                                 onClick={addToCart}
-                                sx={{
-                                    mt: 1,
-                                    mb: 2,
-                                    minWidth: 120,
-                                    height: 30,
-                                    backgroundColor: isAddedToCart ? "#949494" : "#000000",
-                                    color: "#ffffff",
-                                    transition: "background-color 0.3s, color 0.3s",
-                                    "&:hover": {
-                                        background: isAddedToCart ? "#767676" : "#949494",
-                                    },
-                                    animation: isAddedToCart ? "buttonClick 2s" : "none",
-                                    position: "relative",
-                                }}
+                                isAddedToCart={isAddedToCart}
                                 variant="contained"
                             >
                                 {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
                                 {isAddedToCart && (
                                     <>
-                                        <div style={{...bubbleStyle, left: "20px", top: "20px"}}></div>
-                                        <div style={{...bubbleStyle, left: "40px", top: "10px"}}></div>
-                                        <div style={{...bubbleStyle, left: "60px", top: "20px"}}></div>
+                                        <div className="bubble" style={{ left: "20px", top: "20px" }}></div>
+                                        <div className="bubble" style={{ left: "40px", top: "10px" }}></div>
+                                        <div className="bubble" style={{ left: "60px", top: "20px" }}></div>
                                     </>
                                 )}
-                                <div style={bubblesStyle}></div>
-                            </Button>
+                                <div className="bubbles"></div>
+                            </AnimatedButtonComponent>
                         </div>
                     </div>
                 </Box>
