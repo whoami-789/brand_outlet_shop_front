@@ -36,7 +36,6 @@ export function Products_Unlimited({product}: ProductsProps) {
     const [selectedSize, setSelectedSize] = useState<string>("");
     const [cartItemCount, setCartItemCount] = useState(0);
 
-
     const handleStepChange = (step: number) => {
         setActiveStep(step);
     };
@@ -76,7 +75,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                 axios.post('https://brand-outlet.shop/api/cart/add', requestData)
                     .then((response) => {
                         console.log('Товар успешно добавлен в корзину', response.data);
-                        setCartItemCount(cartItemCount + 1); // Увеличиваем счетчик товаров
+                        setCartItemCount(cartItemCount + 1);
                     })
                     .catch((error) => {
                         console.error('Ошибка при добавлении товара в корзину', error);
@@ -200,6 +199,11 @@ export function Products_Unlimited({product}: ProductsProps) {
                             >В корзину</Button>
                         </div>
                     </div>
+                    {cartItemCount > 0 && (
+                        <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center absolute -top-2 -right-2">
+                            {cartItemCount}
+                        </div>
+                    )}
                 </Box>
             </div>
         </>
