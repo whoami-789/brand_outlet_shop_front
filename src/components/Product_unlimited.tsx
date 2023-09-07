@@ -191,7 +191,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                                     minWidth: 120,
                                     height: 30,
                                     backgroundColor: isAddedToCart ? "#949494" : "#000000",
-                                    color: isAddedToCart ? "#ffffff" : "#000000",
+                                    color: isAddedToCart ? "#ffffff" : "#ffffff",
                                     transition: "background-color 0.3s, color 0.3s", // Анимация смены цвета
                                     "&:hover": {
                                         background: isAddedToCart ? "#767676" : "#949494",
@@ -199,7 +199,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                                 }}
                                 variant="contained"
                             >
-                                {isAddedToCart ? "В корзину" : "В КОРЗИНЕ"}
+                                {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
                             </Button>
                         </div>
                     </div>
