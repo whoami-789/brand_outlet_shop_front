@@ -183,18 +183,27 @@ export function Products_Unlimited({product}: ProductsProps) {
                     </div>
                     <div className="ml-4 z-1">
                         <div className="ml-2 mt-0 self-center w-full relative z-10">
-                            {isAddedToCart ? (
-                                <button className="bg-black text-white px-4 py-2 rounded-full absolute inset-0 opacity-0 hover:opacity-100 transition-opacity">
-                                    В КОРЗИНЕ
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={addToCart}
-                                    className="bg-black text-white px-4 py-2 rounded-full transition-transform transform hover:bg-gray-600 hover:scale-105"
-                                >
-                                    В корзину
-                                </button>
-                            )}
+                            <Button
+                                onClick={addToCart}
+                                sx={{
+                                    mt: 1,
+                                    mb: 2,
+                                    minWidth: 120,
+                                    height: 30,
+                                    backgroundColor: isAddedToCart ? "#949494" : "#000000",
+                                    color: isAddedToCart ? "#ffffff" : "#ffffff",
+                                    transition: "background-color 0.3s, color 0.3s", // Анимация смены цвета
+                                    "&:hover": {
+                                        background: isAddedToCart ? "#767676" : "#949494",
+                                    },
+                                    animation: isAddedToCart
+                                        ? "buttonClick 1s"
+                                        : "none", // Анимация при клике
+                                }}
+                                variant="contained"
+                            >
+                                {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
+                            </Button>
                         </div>
                     </div>
                 </Box>
