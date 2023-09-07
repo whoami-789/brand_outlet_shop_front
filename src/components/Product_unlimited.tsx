@@ -153,7 +153,6 @@ export function Products_Unlimited({product}: ProductsProps) {
                                     "& .MuiInputLabel-root": {
                                         color: 'white', // Цвет метки
                                     },
-                                    fontSize: '12px',
                                 }}
                                 MenuProps={{
                                     PaperProps: {
@@ -200,7 +199,11 @@ export function Products_Unlimited({product}: ProductsProps) {
                             >В корзину</Button>
                         </div>
                     </div>
-
+                    {cartItemCount > 0 && (
+                        <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center absolute -top-2 -right-2">
+                            {cartItemCount}
+                        </div>
+                    )}
                 </Box>
             </div>
         </>

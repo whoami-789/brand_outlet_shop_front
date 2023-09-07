@@ -97,13 +97,8 @@ export function Product_Unlimited_Page() {
             </div>
             <div className="absolute bottom-0 left-0 p-2 z-10" style={{ zIndex: 10, position: 'relative' }}>
                 <Link to="/cart">
-                    <CartButton onClick={() => {}} cartItemCount={cartItemCount} />
+                    <CartButton onClick={() => setCartVisible(!cartVisible)} cartItemCount={cartItemCount} /> {/* Передайте количество товаров в корзине */}
                 </Link>
-                {cartItemCount > 0 && (
-                    <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center relative">
-                        {cartItemCount}
-                    </div>
-                )}
             </div>
         </div>
     )
