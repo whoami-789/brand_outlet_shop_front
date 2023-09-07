@@ -196,27 +196,14 @@ export function Products_Unlimited({product}: ProductsProps) {
                                     "&:hover": {
                                         background: isAddedToCart ? "#767676" : "#949494",
                                     },
-                                    position: "relative", // Добавляем относительное позиционирование
-                                    overflow: "hidden", // Скрываем переполнение, чтобы пузырьки не выходили за границы кнопки
+                                    animation: isAddedToCart
+                                        ? "buttonClick 1s"
+                                        : "none", // Анимация при клике
                                 }}
-                                className={`mt-1 mb-2 min-w-[120px] h-30 relative ${
-                                    isAddedToCart ? "bg-gray-400 text-white" : "bg-black text-white"
-                                } transition-colors duration-300 hover:bg-gray-600`}
                                 variant="contained"
                             >
-                              <span className="relative z-10">
                                 {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
-                              </span>
-                                                            <span className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
-                                {[...Array(10)].map((_, index) => (
-                                    <span
-                                        className={`bg-[#00FF80] rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 opacity-100 animate-move-bubble`}
-                                        key={index}
-                                    ></span>
-                                ))}
-                              </span>
                             </Button>
-
                         </div>
                     </div>
                 </Box>
