@@ -192,7 +192,7 @@ function AdminPanel() {
 
     const handleDeleteCategory = async (categoryId: number) => {
         try {
-            await axios.delete(`https://brand-outlet.shop/api/category/${categoryId}`);
+            await axios.post(`https://brand-outlet.shop/api/category/${categoryId}/delete`);
             const updatedCategories = categories.filter(
                 (category) => category.id !== categoryId
             );
