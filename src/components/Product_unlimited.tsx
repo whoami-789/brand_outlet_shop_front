@@ -84,6 +84,26 @@ export function Products_Unlimited({product}: ProductsProps) {
         }
     };
 
+    const bubblesStyle: React.CSSProperties = {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+        pointerEvents: "none",
+    };
+
+    const bubbleStyle: React.CSSProperties = {
+        backgroundColor: "#00FF80",
+        borderRadius: "100%",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        display: "block",
+        zIndex: -1,
+        animation: "move-bubble 1.5s infinite",
+    };
     return (
         <>
             <div className="ml-2">
@@ -191,18 +211,25 @@ export function Products_Unlimited({product}: ProductsProps) {
                                     minWidth: 120,
                                     height: 30,
                                     backgroundColor: isAddedToCart ? "#949494" : "#000000",
-                                    color: isAddedToCart ? "#ffffff" : "#ffffff",
-                                    transition: "background-color 0.3s, color 0.3s", // Анимация смены цвета
+                                    color: "#ffffff",
+                                    transition: "background-color 0.3s, color 0.3s",
                                     "&:hover": {
                                         background: isAddedToCart ? "#767676" : "#949494",
                                     },
-                                    animation: isAddedToCart
-                                        ? "buttonClick 1s"
-                                        : "none", // Анимация при клике
+                                    animation: isAddedToCart ? "buttonClick 2s" : "none",
+                                    position: "relative",
                                 }}
                                 variant="contained"
                             >
                                 {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
+                                {isAddedToCart && (
+                                    <>
+                                        <div style={{...bubbleStyle, left: "20px", top: "20px"}}></div>
+                                        <div style={{...bubbleStyle, left: "40px", top: "10px"}}></div>
+                                        <div style={{...bubbleStyle, left: "60px", top: "20px"}}></div>
+                                    </>
+                                )}
+                                <div style={bubblesStyle}></div>
                             </Button>
                         </div>
                     </div>
