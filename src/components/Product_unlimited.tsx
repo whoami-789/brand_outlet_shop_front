@@ -197,10 +197,15 @@ export function Products_Unlimited({product}: ProductsProps) {
                                         background: isAddedToCart ? "#767676" : "#949494",
                                     },
                                     animation: isAddedToCart
-                                        ? "buttonClick 1s"
+                                        ? "buttonClick 2s"
                                         : "none", // Анимация при клике
                                 }}
                                 variant="contained"
+                                className={`mt-1 mb-2 min-w-[120px] h-8 ${
+                                    isAddedToCart
+                                        ? "bg-gray-600 text-white animate-none"
+                                        : "bg-black text-white hover:bg-gray-600 animate-pulse"
+                                }`}
                             >
                                 {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
                             </Button>
