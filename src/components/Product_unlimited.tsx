@@ -152,8 +152,12 @@ export function Products_Unlimited({product}: ProductsProps) {
                                     "& .MuiInputLabel-root": {
                                         color: 'white', // Цвет метки
                                     },
-                                    "& .MuiMenu-paper": {
-                                        maxHeight: '150px', // Задайте максимальную высоту меню
+                                }}
+                                MenuProps={{
+                                    PaperProps: {
+                                        style: {
+                                            maxHeight: '150px', // Установите максимальную высоту после клика
+                                        },
                                     },
                                 }}
                             >
