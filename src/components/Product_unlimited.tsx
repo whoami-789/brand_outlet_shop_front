@@ -75,6 +75,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                 axios.post('https://brand-outlet.shop/api/cart/add', requestData)
                     .then((response) => {
                         console.log('Товар успешно добавлен в корзину', response.data);
+                        setIsAddedToCart(true); // Устанавливаем флаг, что товар добавлен в корзину
                     })
                     .catch((error) => {
                         console.error('Ошибка при добавлении товара в корзину', error);
@@ -198,7 +199,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                                 }}
                                 variant="contained"
                             >
-                                {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
+                                {isAddedToCart ? "В КОРЗИНЕ" : "В КОРЗИНУ"}
                             </Button>
                         </div>
                     </div>
