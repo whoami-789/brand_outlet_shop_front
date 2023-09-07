@@ -34,7 +34,7 @@ export function Products_Unlimited({product}: ProductsProps) {
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
     const [selectedSize, setSelectedSize] = useState<string>("");
-    const [cartItemCount, setCartItemCount] = useState(0);
+    const [isAddedToCart, setIsAddedToCart] = useState(false);
 
     const handleStepChange = (step: number) => {
         setActiveStep(step);
@@ -75,7 +75,6 @@ export function Products_Unlimited({product}: ProductsProps) {
                 axios.post('https://brand-outlet.shop/api/cart/add', requestData)
                     .then((response) => {
                         console.log('Товар успешно добавлен в корзину', response.data);
-                        setCartItemCount(cartItemCount + 1);
                     })
                     .catch((error) => {
                         console.error('Ошибка при добавлении товара в корзину', error);
@@ -184,19 +183,23 @@ export function Products_Unlimited({product}: ProductsProps) {
                     <div className="ml-4 z-1">
                         <div className="ml-2 mt-0 self-center w-full relative z-10">
                             <Button
-                                onClick={addToCart} // Добавляем товар в корзину при клике
+                                onClick={addToCart}
                                 sx={{
                                     mt: 1,
                                     mb: 2,
                                     minWidth: 120,
                                     height: 30,
-                                    backgroundColor: '#000000',
-                                    '&:hover': {
-                                        background: "#767676",
+                                    backgroundColor: isAddedToCart ? "#949494" : "#000000",
+                                    color: isAddedToCart ? "#ffffff" : "#000000",
+                                    transition: "background-color 0.3s, color 0.3s", // Анимация смены цвета
+                                    "&:hover": {
+                                        background: isAddedToCart ? "#767676" : "#949494",
                                     },
                                 }}
                                 variant="contained"
-                            >В корзину</Button>
+                            >
+                                {isAddedToCart ? "В КОРЗИНЕ" : "В корзину"}
+                            </Button>
                         </div>
                     </div>
                 </Box>
