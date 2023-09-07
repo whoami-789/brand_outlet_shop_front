@@ -200,11 +200,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                             >В корзину</Button>
                         </div>
                     </div>
-                    {cartItemCount > 0 && (
-                        <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center relative">
-                            {cartItemCount}
-                        </div>
-                    )}
+
                 </Box>
             </div>
         </>
