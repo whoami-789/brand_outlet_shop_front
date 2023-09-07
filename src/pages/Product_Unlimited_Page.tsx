@@ -99,6 +99,11 @@ export function Product_Unlimited_Page() {
                 <Link to="/cart">
                     <CartButton onClick={() => setCartVisible(!cartVisible)} cartItemCount={cartItemCount} /> {/* Передайте количество товаров в корзине */}
                 </Link>
+                {cartItemCount > 0 && (
+                    <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center absolute -top-2 -right-2">
+                        {cartItemCount}
+                    </div>
+                )}
             </div>
         </div>
     )
