@@ -168,7 +168,7 @@ export function Products_Unlimited({product}: ProductsProps) {
                                 {product.sizes.map((size, index) => (
                                     <MenuItem key={index} value={size.size}
                                               sx={{
-                                                  fontSize: '12px',
+                                                  fontSize: '8px',
                                               }}>
                                         {size.size}
                                     </MenuItem>

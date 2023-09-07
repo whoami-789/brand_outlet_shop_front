@@ -16,10 +16,7 @@ export function CartButton({ onClick, cartItemCount }: CartButtonProps) {
                 <ShoppingCartIcon />
             </button>
             {cartItemCount > 0 && (
-                <div
-                    className="bg-red-500 text-white rounded-full w-6 h-6 text-center absolute -top-2 right-2"
-                    style={{ zIndex: 1 }}
-                >
+                <div className="bg-red-500 text-white rounded-full w-6 h-6 text-center absolute -top-6 right-6">
                     {cartItemCount}
                 </div>
             )}
