@@ -95,29 +95,24 @@ export function Product_Unlimited_Page() {
             <div className="grid gap-2 grid-cols-2 grid-rows-2 w-fit mb-2 z-0">
                 {filteredProducts.map(product => <Products_Unlimited product={product} key={product.id}/>)}
             </div>
-            <div className="absolute bottom-0 left-0 p-2 z-10" style={{zIndex: 10, position: 'relative'}}>
+            <div className="absolute bottom-0 left-0 p-2 z-10" style={{ zIndex: 10, position: 'relative' }}>
                 <Link to="/cart">
-                    <CartButton onClick={() => setCartVisible(!cartVisible)}
-                                cartItemCount={cartItemCount}/> {/* Передайте количество товаров в корзине */}
+                    <CartButton onClick={() => setCartVisible(!cartVisible)} cartItemCount={cartItemCount} />
                 </Link>
             </div>
-
-            <div className="border p-4 mt-4 mx-4 max-w-xl float-left">
-                <p className="text-lg">
-                    Не нашли нужный товар? Не беда - напишите нам{" "}
+            <div className="bg-gray-300 p-4 border -mt-4 w-2/12 ml-6">
+                <p>
+                    Не нашли нужный товар? Не беда - Напишите нам{' '}
                     <a
                         href="https://t.me/Brand_Outlet_Buy"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 hover:underline"
-                    >
-                        в телеграм
-                    </a>{" "}
-                    и отправьте интересующий вас товар (это может быть фото с пойзона или еще откуда-нибудь).
-                    Мы сразу свяжемся с вами и подскажем стоимость.
+                    >                        в телеграм
+                    </a>{' '}
+                    и отправьте интересующий вас товар (это может быть фото с пойзона, или еще откуда нибудь) Мы сразу свяжемся с вами и подскажем стоимость
                 </p>
             </div>
-
         </div>
     )
 }
