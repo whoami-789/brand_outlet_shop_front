@@ -100,7 +100,7 @@ export function Product_Unlimited_Page() {
                     <CartButton onClick={() => setCartVisible(!cartVisible)} cartItemCount={cartItemCount} />
                 </Link>
             </div>
-            <div className="bg-gray-300 p-4 border -mt-4 w-full ml-6">
+            <div className="bg-gray-300 p-4 border -mt-4 w-full">
                 <p>
                     Не нашли нужный товар? Не беда - Напишите нам{' '}
                     <a
