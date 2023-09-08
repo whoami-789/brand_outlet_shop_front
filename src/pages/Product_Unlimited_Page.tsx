@@ -102,12 +102,22 @@ export function Product_Unlimited_Page() {
                 </Link>
             </div>
 
-            <div className="border p-4 mt-4 mx-auto max-w-xl">
-                <p>Не нашли нужный товар? Не беда - Напишите нам <a href="https://t.me/Brand_Outlet_Buy" target="_blank"
-                                                                    rel="noopener noreferrer">в телеграм</a> и отправьте
-                    интересующий вас товар( это может быть фото с пойзона, или еще откуда нибудь)
-                    Мы сразу свяжемся с вами и подскажем стоимость</p>
+            <div className="border p-4 mt-4 mx-4 max-w-xl float-left">
+                <p className="text-lg">
+                    Не нашли нужный товар? Не беда - напишите нам{" "}
+                    <a
+                        href="https://t.me/Brand_Outlet_Buy"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                    >
+                        в телеграм
+                    </a>{" "}
+                    и отправьте интересующий вас товар (это может быть фото с пойзона или еще откуда-нибудь).
+                    Мы сразу свяжемся с вами и подскажем стоимость.
+                </p>
             </div>
+
         </div>
     )
 }
