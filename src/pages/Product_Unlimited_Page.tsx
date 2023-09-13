@@ -68,39 +68,27 @@ export function Product_Unlimited_Page() {
 
     return (
         <div className="relative bg-gray-300 w-full h-full">
-            {/*<div className="mb-3 ml-16">*/}
-            {/*    <TextField*/}
-            {/*        id="input-with-icon-textfield"*/}
-            {/*        InputProps={{*/}
-            {/*            startAdornment: (*/}
-            {/*                <InputAdornment position="start">*/}
-            {/*                    <SearchIcon/>*/}
-            {/*                </InputAdornment>*/}
-            {/*            ),*/}
-            {/*        }}*/}
-            {/*        variant="standard"*/}
-            {/*    />*/}
-            {/*</div>*/}
             <div className="flex overflow-x-scroll whitespace-nowrap">
                 {categories.map((category, index) => (
                     <div
-                        className="rounded bg-white m-2 w-fit h-1/6 ml-2"
-                        key={index}
+                        className="rounded bg-white m-2 w-fit h-1/6 ml-2"                        key={index}
                         onClick={() => handleCategoryClick(category)}
                     >
                         <div className="text-center font-bold text-base m-1">{category}</div>
                     </div>
                 ))}
             </div>
-            <div className="grid gap-2 grid-cols-2 grid-rows-2 w-fit mb-2 z-0">
-                {filteredProducts.map(product => <Products_Unlimited product={product} key={product.id}/>)}
+            <div className="ml-0.5 grid gap-2 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 w-full mb-2 z-0">
+                {filteredProducts.map((product) => (
+                    <Products_Unlimited product={product} key={product.id} />
+                ))}
             </div>
             <div className="absolute bottom-0 left-0 p-2 z-10" style={{ zIndex: 10, position: 'relative' }}>
                 <Link to="/cart">
                     <CartButton onClick={() => setCartVisible(!cartVisible)} cartItemCount={cartItemCount} />
                 </Link>
             </div>
-            <div className="bg-gray-300 p-4 border -mt-4 w-80 ml-5">
+            <div className="bg-gray-300 p-4 border -mt-4 w-full md:w-80 ml-5">
                 <p>
                     Не нашли нужный товар? Не беда - Напишите нам{' '}
                     <a
@@ -108,7 +96,8 @@ export function Product_Unlimited_Page() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 hover:underline"
-                    >                        в телеграм
+                    >
+                        в телеграм
                     </a>{' '}
                     и отправьте интересующий вас товар (это может быть фото с пойзона, или еще откуда нибудь) Мы сразу свяжемся с вами и подскажем стоимость
                 </p>
